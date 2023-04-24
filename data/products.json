@@ -1,0 +1,29 @@
+[
+	{
+		"title": "Placa Video Msi Geforce Rtx 3060 Ti Ventus 3x Oc Lhr 8gb",
+		"description": "GeForce RTX™ 3060 Ti te permite encarar los últimos títulos utilizando todo el poder de Ampere, la 2da generación de arquitectura RTX de NVIDIA.",
+		"price": 1500,
+		"thumbnail": "./img/placa.png",
+		"code": 1231,
+		"stock": 10,
+		"id": 1
+	},
+	{
+		"title": "Memoria Ram Kingston Ddr4 3200mhz 16gb Hyperx Fury Rgb",
+		"description": "Con su tecnología DDR4, mejorará el desempeño de tu equipo, ya que aumentará la fluidez y la velocidad en la transferencia de datos",
+		"price": 340,
+		"thumbnail": "./img/memoria.png",
+		"code": 1232,
+		"stock": 10,
+		"id": 2
+	},
+	{
+		"title": "Procesador Intel Core i9-10900K",
+		"description": "LGA1200, Frecuencia 3.7 GHz, Frecuencia Turbo Max. 5.3 GHz, 10 Núcleos, 20MB L3 Cache, Intel UHD Graphics 630.",
+		"price": "./img/procesador.png",
+		"thumbnail": 1233,
+		"code": 10,
+		"stock": 10,
+		"id": 3
+	}
+]

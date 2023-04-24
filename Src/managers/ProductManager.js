@@ -2,7 +2,7 @@ import fs from 'fs';
 export default class ProductManager {
   constructor() {
     this.products = [];
-    this.path = "./products.json";
+    this.path = "./data/products.json";
   }
 
   initialize = async () => {
@@ -116,13 +116,19 @@ class Product {
   }
 };
 
-const productManager = new ProductManager("./products.json");
+const productManager = new ProductManager("./data/products.json");
 const test = async () => {
       await productManager.initialize();
       await productManager.getProducts();
       // console.log(await productManager.getProducts());
   // //AGREGA PRODUCTO
-      await productManager.addProduct({title:"Placa Video Msi Geforce Rtx 3060 Ti Ventus 3x Oc Lhr 8gb", description: "GeForce RTX™ 3060 Ti te permite encarar los últimos títulos utilizando todo el poder de Ampere, la 2da generación de arquitectura RTX de NVIDIA.", price:1500, thumbnail:"./placa.png", code:123, stock:10})
+  const product1 = new Product("Placa Video Msi Geforce Rtx 3060 Ti Ventus 3x Oc Lhr 8gb", "GeForce RTX™ 3060 Ti te permite encarar los últimos títulos utilizando todo el poder de Ampere, la 2da generación de arquitectura RTX de NVIDIA.", 1500,"./img/placa.png", 1231, 10)
+  await productManager.addProduct(product1);
+  const product2 = new Product("Memoria Ram Kingston Ddr4 3200mhz 16gb Hyperx Fury Rgb", 'Con su tecnología DDR4, mejorará el desempeño de tu equipo, ya que aumentará la fluidez y la velocidad en la transferencia de datos', 340,"./img/memoria.png" , 1232, 10)
+  await  productManager.addProduct(product2);
+  const product3 = new Product("Procesador Intel Core i9-10900K", "LGA1200, Frecuencia 3.7 GHz, Frecuencia Turbo Max. 5.3 GHz, 10 Núcleos, 20MB L3 Cache, Intel UHD Graphics 630.", "./img/procesador.png", 1233, 10)
+  await  productManager.addProduct(product3); 
+  //await productManager.addProduct({title:"Placa Video Msi Geforce Rtx 3060 Ti Ventus 3x Oc Lhr 8gb", description: "GeForce RTX™ 3060 Ti te permite encarar los últimos títulos utilizando todo el poder de Ampere, la 2da generación de arquitectura RTX de NVIDIA.", price:1500, thumbnail:"./placa.png", code:123, stock:10})
   // // POR ID
       //await productManager.getProductsById(1);
       // await productManager.getProductsById(2);

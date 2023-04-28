@@ -1,12 +1,12 @@
 import { Router } from "express";
 const router = Router();
-import ProductManager from "../managers/ProductManager.js"
+import ProductManager from "../managers/ProductManager.js";
 const productManager = new ProductManager;
-const products = productManager.getProducts();
 //Trae los productos y declarala cantidad que quiero mostar
 router.get("/", async (req, res) => {
     const cantidadDeProductos = req.query.limit;
-    const allProducts = await products;
+    const allProducts = await productManager.getProducts();
+    console.log("AllProducts: ",allProducts);
     if (cantidadDeProductos) {
       const reduced = allProducts.slice(0, cantidadDeProductos);
       res.send(reduced);
@@ -16,16 +16,24 @@ router.get("/", async (req, res) => {
   });
 //Seleciona x id el producto que quiere traer
 router.get("/:pid", async (req, res) => {
+  try { 
     const idProducts = req.params.pid;
-    const allProducts = await products;
-    const selected = allProducts.find((p) => p.id == idProducts);
-    res.send(selected);
+    console.log(idProducts)
+    const getProduct = await productManager.getProductsById(idProducts);
+    console.log(getProduct)
+    res.send(getProduct);
+    
+  } catch (error) {
+    console.log("Not found")
+  }
+   
 });
 //Agrega un nuevo producto
 router.post("/", async (req, res) => {
   const product = req.body
   const productAdd = await productManager.addProduct(product);
-  productAdd === undefined ? res.status(400).send() : res.status(201).send(productAdd);
+  res.status(201).send("Product add");
+
 });
 //Toma un producto y lo actualiza
 router.put("/:pid", async (req, res) => {
@@ -33,13 +41,13 @@ router.put("/:pid", async (req, res) => {
   const updatedProduct = req.body
   const productId = parseInt(req.params.pid)
   const productUpdate = await productManager.updateProduct(productId,updatedProduct)
-  res.status(200).send(productUpdate)
+  res.status(200).send(productUpdate);
 } catch (error) {
   res.status(400).send({status:"error",message:"Product not found"})
   }
 });
 //Elimina un producto
-router.delete("/", async (req,res) => {
+router.delete("/:pid", async (req,res) => {
   try {
     const productId = parseInt(req.params.pid)
     const productsDelete = await productManager.deleteProduct(productId)

@@ -31,31 +31,11 @@ router.post("/", async (req, res) => {
 });
 //agrega un producto al arreglo "products"
 router.post("/:cid/products/:pid", async (req, res) => {
-        console.log("PARAMS",req.params.pid)
-        const allCarts = await cartsManager.addProductInCart();
         const idCart = req.params.cid;
-        console.log("PARAMS",req.params.cid)
-        console.log("acaaaaa",idCart)
-        const CartExist = allCarts.find((c) => c.id == idCart);
-        if (!CartExist) {
-          return res.status(404).send({ status: "error", error: "Cart not found" });
-        }
         const idProduct = req.params.pid;
-        let quantity = req.body.quantity;
-        quantity ? (quantity = quantity) : (quantity = 1);
-        const allProducts = await productManager.getProducts();
-        const productSelected = allProducts.find((p) => p.id == idProduct);
-        if (productSelected) {
-             res.send({ status: "succes ", code: "Product and Cart found" })
-        } else {
-            res.send("Product not found");
-        }
-        const productSelectedId = productSelected.id;
-        const cartToSend = {
-          product: productSelectedId,
-          quantity: quantity,
-        };
-        cartsManager.addProductToCart(idCart, cartToSend);
+        const {quantity} = req.body;
+        const allCarts = await cartsManager.addProductInCart(idCart, idProduct, quantity);
+        res.status(201).send(allCarts);
 });
 
 export default router;

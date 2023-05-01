@@ -56,22 +56,32 @@ export default class CartManager {
         fs.promises.writeFile(this.path, JSON.stringify(carts, null, "\t"));
     };
     //Mete los prodcutos en el carrito
-    addProductInCart = async (idCart, productsToAdd) => {
+    addProductInCart = async (idCart,idProduct,quantity) => {
         const cid = parseInt(idCart);
-        console.log("HOLAAA",idCart)
         const carts = await this.getCarts();
         const cartSelected = carts.find((cart) => cart.id === cid);
-        console.log(cartSelected)
-        const products = await productManager.getProductsById(productsToAdd);
-        const inCart = cartSelected.products.find((p) =>  p.products ===  productsToAdd.products);
-    
+        const getProduct = await productManager.getProductsById(Number(idProduct))
+        if (!getProduct) {
+            console.log("product not found")
+            return {error: "Product not found"};
+        };    
+        const product = {quantity,idProduct}
+        const inCart = cartSelected.products.find((p) =>  p.idProduct == product.idProduct);
         if (!inCart) {
-            cartSelected.products.push(productsToAdd);
+            cartSelected.products.push(product);
         } else {
-            const index = cartSelected.products.findIndex((p) => p.product === productsToAdd.products);
+            product["quantity"] = inCart["quantity"] + product["quantity"];
         }
+        cartSelected.products.map(element => {
+            if (element.idProduct === idProduct) {
+                element = Object.assign(element, product);
+                return element
+            }
+            return element
+        })
         const newCart = carts.map((cart) => cart.id == idCart  ? { ...cart, ...cartSelected } : cart
         ); 
         fs.promises.writeFile(this.path, JSON.stringify(newCart, null, "\t"));
+        return{"message": "Product added"}
     };
 };

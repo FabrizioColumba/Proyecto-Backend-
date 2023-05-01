@@ -63,7 +63,7 @@ export default class ProductManager {
 
       getId
         ? console.log(getId)
-        : console.log("error product not found");
+        : false
         null;
         return getId;
     } catch (error) {

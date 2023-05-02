@@ -21,14 +21,6 @@ export default class ProductManager {
     } else {
       console.log(error);
     }
-    // if (fs.existsSync(this.path)) {
-    //   const data = await fs.promises.readFile(this.path, "utf-8");
-    //   const products = JSON.parse(data);
-    //   this.products = products
-    //   return this.products;
-    // }
-    // console.log("No products");
-    // return this.products;
   }
   addProduct = async ({title,description,price,thumbnails,code,stock,}) => {
     try {

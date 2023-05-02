@@ -1,22 +1,47 @@
-{{#each productsList}}
-    <article class="col s12 m6 l3">
-        <div class="card">
-            {{!-- <div class="card-image">
-                <img src="images/sample-1.jpg">
-                <span class="card-title">{{title}}</span>
-            </div> --}}
-            <div class="card-content">
-                <h2>{{title}}</h2>
-                <p>Description {{description}}</p>
-            </div>
-            <div class="card-action">
-                <p><b>Precio: {{price}}</b></p>
-                <span>Stock: {{stock}}</span>
-                <span>Código: {{code}}</span>
-                {{!-- <a href="#">libro</a> --}}
-                {{!-- <a href="#">Peli</a> --}}
-            </div>
+{{!-- <h1>PRODUCTS</h1>
+
+<div>
+    {{#each prod }}
+    <div>
+        <div>code: {{this.code}}</div>
+        <div >
+            <h4>{{this.title}}</h4>
+            <p>
+                <li>
+                    id: {{this.id}}
+                </li>
+                <li>
+                    description: {{this.description}}
+                </li>
+                <li>
+                    price: ${{this.price}}
+                </li>
+                <li>
+                    category: {{this.category}}
+                </li>
+                <li>
+                    status: {{this.status}}
+                </li>
+                <li>
+                    stock: {{this.stock}}
+                </li>
+                <li>
+                    thumbnail: {{this.thumbnail}}
+                </li>
+            </p>
         </div>
-    </article>
-    {{/each}} 
+    </div>
+    {{/each}}
+</div> --}}
+
+<h1 id="h1">Productos almacenados</h1>
+<ul>
+    {{#each prod}}
+    <li>{{this.title}}, {{this.description}}, {{this.price}}</li>
+    {{/each}}
+</ul>
+
+
+
+<script src="/js/index.js"></script>
 <script src="/js/index.js"></script>

@@ -57,6 +57,31 @@ router.delete("/:pid", async (req,res) => {
   }
 
 });
-router.post
+router.post("/realtimeproducts", async (req, res) => {
+  const products = await productManager.getProducts(); 
+  const product = req.body; 
+  if (products.length === 0) {
+      product.id = 1;
+  } else {
+      product.id = products[products.length - 1].id + 1;
+  }
+
+  if(!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock ){
+    return res.send({status:"Error", message:"todos los campos son obligatorios"});
+  }
+
+  product.code = parseInt(product.code);
+
+  const validationCode = products.some(e => e.code === product.code);
+
+  if(validationCode){        
+      res.send({status:"Error", message:"Código ya ingresado"})
+  }else{        
+  products.push(product);
+  console.log(products)
+  await productManager.addProduct(product)
+  req.io.emit("products", products);
+  res.send("ok");
+  }})
 
 export default router;

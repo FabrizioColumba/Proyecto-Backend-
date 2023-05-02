@@ -1,10 +1,12 @@
 const socket = io();
-socket.on()
-// socket.on("sendProducts", data =>{
-//     console.log(data.id);
-//     let messageLogs = "";
-//     data.forEach(log => {
-//         messagesLogs += `${log.title} dice: ${log.description}`;
-//     });
-//     logs.innerHTML = messagesLogs;
-// })
+
+socket.on(`products`, data => {
+    const productContent = document.getElementById("h1");
+
+    let content = "";
+
+    data.forEach(product => {
+        content += `${product.title} ${product.description} ${product.price} ${product.thumbnail} ${product.stock}  <br/>`;
+    });
+    productContent.innerHTML = content;
+}) 

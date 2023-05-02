@@ -25,5 +25,21 @@
 		"code": 1233,
 		"stock": 10,
 		"id": 3
+	},
+	{
+		"title": "Procesador Intel Core i9-10900K",
+		"description": "LGA1200, Frecuencia 3.7 GHz, Frecuencia Turbo Max. 5.3 GHz, 10 Núcleos, 20MB L3 Cache, Intel UHD Graphics 630.",
+		"price": 800,
+		"code": 3435,
+		"stock": 10,
+		"id": 4
+	},
+	{
+		"title": "amd dsadasdasd",
+		"description": "LGA1200, Frecuencia 3.7 GHz, Frecuencia Turbo Max. 5.3 GHz, 10 Núcleos, 20MB L3 Cache, Intel UHD Graphics 630.",
+		"price": 800,
+		"code": 23235,
+		"stock": 10,
+		"id": 5
 	}
 ]

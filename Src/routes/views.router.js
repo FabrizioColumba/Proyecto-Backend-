@@ -10,14 +10,8 @@ router.get("/products", async (req, res) => {
     res.render("index", {prod : products})
 })
 
-router.get("/realTimeProducts", async (req, res) => {
-     //productos harcodeados
-    const products = await productManager.getProducts();
-    res.render("realTimeProducts", {products});
-});
-
-router.post("", async (req, res) => {
-
+router.get("/realtimeproducts", async (req, res) => {
+    res.render("realTimeProducts");
 });
 
 export default router;

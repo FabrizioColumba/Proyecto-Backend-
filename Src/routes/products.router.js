@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import ProductManager from "../managers/ProductManager.js";
+import ProductManager from "../dao/mongo/managers/ProductManager.js";
 const productManager = new ProductManager;
 //Trae los productos y declarala cantidad que quiero mostar
 router.get("/", async (req, res) => {

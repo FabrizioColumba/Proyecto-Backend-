@@ -61,6 +61,7 @@ export default class CartManager {
         const carts = await this.getCarts();
         const cartSelected = carts.find((cart) => cart.id === cid);
         const getProduct = await productManager.getProductsById(Number(idProduct))
+        
         if (!getProduct) {
             console.log("product not found")
             return {error: "Product not found"};

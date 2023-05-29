@@ -1,14 +1,14 @@
-import productModel from "../models/products";
+import productModel from "../models/productsModel.js";
 
 export default class ProductManager {
-    getProduct = (params) => {
-        return productModel.find(params);
+    getProduct = () => {
+        return productModel.find().lean();
     }
     getProductBy = (params) =>{
-        return productModel.findOne(params).lean();
+        return productModel.findOne(params).lean().populate("products.product");
     }
-    createProduct = (params) =>{
-        return productModel.create(params);
+    createProduct = (product) =>{
+        return productModel.create(product);
     }
     updateProduct = (id, product) =>{
         return productModel.findByIdAndUpdate(id, { $set: product});

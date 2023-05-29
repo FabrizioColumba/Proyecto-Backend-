@@ -1,7 +1,9 @@
 import { Router } from "express";
+import ProductManager from "../dao/mongo/managers/productsManager.js"
+
 const router = Router();
-import ProductManager from "../dao/mongo/managers/ProductManager.js";
 const productManager = new ProductManager;
+
 //Trae los productos y declarala cantidad que quiero mostar
 router.get("/", async (req, res) => {
     const cantidadDeProductos = req.query.limit;
@@ -13,75 +15,82 @@ router.get("/", async (req, res) => {
     } else {
       res.send(allProducts);
     }
-  });
+});
+
+
 //Seleciona x id el producto que quiere traer
 router.get("/:pid", async (req, res) => {
   try { 
-    const idProducts = req.params.pid;
-    console.log(idProducts)
-    const getProduct = await productManager.getProductsById(idProducts);
-    console.log(getProduct)
-    res.send(getProduct);
+    const {pid} = req.params;
+    const getProduct = await productManager.getProductsById({_id: pid});
+
+    if(!getProduct) return res.status(404).send({status:"error", error:"Product not found"})
+    res.send({status:"success", payload: getProduct});
     
   } catch (error) {
-    console.log("Not found")
+    console.log(error)
   }
-   
 });
+
+
 //Agrega un nuevo producto
 router.post("/", async (req, res) => {
-  const product = req.body
-  const productAdd = await productManager.addProduct(product);
-  res.status(201).send("Product add");
-
+  const {title, description, price, category, status} = req.body
+  if(!title||!description||!price||!category) return res.status(400).send({status:"error", error:"Incompleted values"});
+  const product = {
+    title,
+    description,
+    price,
+    category
+  }
+  const result = await productManager.createProduct(product);
+  res.status(201).send("Product created");
 });
+
+
 //Toma un producto y lo actualiza
 router.put("/:pid", async (req, res) => {
   try {
-  const updatedProduct = req.body
-  const productId = parseInt(req.params.pid)
-  const productUpdate = await productManager.updateProduct(productId,updatedProduct)
-  res.status(200).send(productUpdate);
+  const {pid} = req.params
+  const updateProduct = req.body;
+  const resutl = await productManager.updateProduct(pid,updateProduct);
+  res.sendStatus(200)
 } catch (error) {
   res.status(400).send({status:"error",message:"Product not found"})
   }
 });
+
+
 //Elimina un producto
 router.delete("/:pid", async (req,res) => {
   try {
-    const productId = parseInt(req.params.pid)
-    const productsDelete = await productManager.deleteProduct(productId)
+   const {pid} = req.params;
+    const productsDelete = await productManager.deleteProduct(pid)
     res.status(200).send({status:"success",message: `Product ID has been deleted`, products : productsDelete})
   }catch (err) {
     res.status(200).send({status:"error",message: `Product not found`}) 
   }
-
 });
+
+
 router.post("/realtimeproducts", async (req, res) => {
-  const products = await productManager.getProducts(); 
-  const product = req.body; 
-  if (products.length === 0) {
-      product.id = 1;
-  } else {
-      product.id = products[products.length - 1].id + 1;
-  }
+  try{
+    const {title, description, price, category}= req.body
+    if(!title || !description || !price || !category) return res.status(400).send({status: "error", error: "Incompleted values"})
+    const product= {
+        title,
+        description,
+        price,
+        category
+    }
+    const result= await productManager.createProduct(product)
+    res.sendStatus(201)
 
-  if(!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock ){
-    return res.send({status:"Error", message:"todos los campos son obligatorios"});
-  }
-
-  product.code = parseInt(product.code);
-
-  const validationCode = products.some(e => e.code === product.code);
-
-  if(validationCode){        
-      res.send({status:"Error", message:"Código ya ingresado"})
-  }else{        
-  products.push(product);
-  console.log(products)
-  await productManager.addProduct(product)
-  req.io.emit("products", products);
-  res.send("ok");
-  }})
+    const allProducts= await productsService.getProducts()
+    req.io.emit('productRealTime', allProducts)
+}
+catch(err){
+    console.log(err)
+}})
 
 export default router;

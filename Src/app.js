@@ -1,16 +1,20 @@
-
 import express from "express";
 import handlebars from "express-handlebars"
 import mongoose from "mongoose";
 import { Server } from  "socket.io";
+import MongoStore from "connect-mongo";
+import session from "express-session";
 
 import __dirname from "./util.js";
+
 import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
+import sessionsRouter from './routes/session.router.js';
+import registerChatHandler from "./listeners/chatHandler.js"
 
 const app = express();
-const connection = mongoose.connect("mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/EntregaFinal?retryWrites=true&w=majority")
+const connection = mongoose.connect("mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/modulo2?retryWrites=true&w=majority")
 const PORT = process.env.PORT || 8080; 
 const server = app.listen(PORT, ()=>{console.log(`listening on PORT ${PORT}`)});
 
@@ -32,10 +36,21 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "handlebars");
 
+app.use(session({
+  store: new MongoStore({
+      mongoUrl: "mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/modulo2?retryWrites=true&w=majority",
+      ttl: 20
+  }),
+  secret: 'CoderS3cret',
+  resave: false,
+  saveUninitialized: false
+}))
+
 //Routers
 app.use("/api/carts",cartsRouter);
 app.use("/api/products",productsRouter);
 app.use("/",viewsRouter);
+app.use('/api/sessions',sessionsRouter);
 
 io.on('connection',socket=>{
   registerChatHandler(io,socket);

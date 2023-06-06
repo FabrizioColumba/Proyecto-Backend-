@@ -58,6 +58,15 @@ router.get("/realtimeproducts", async (req, res) => {
 router.get('/chat', async(req,res)=>{
     res.render('chat')
 })
+//register
+router.get('/register', (req, res)=>{
+    res.render('register')
+})
+
+//login
+router.get('/login', (req,res)=>{
+    res.render('login')
+})
 //Vista del carrito
 router.get('/carts/:cid', async(req,res) => {
     const {cid} = req.params;

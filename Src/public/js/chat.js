@@ -1,6 +1,7 @@
 const socket = io({
     autoConnect: false,
   });
+
   
   const chatBox = document.getElementById("chatBox");
   let user;

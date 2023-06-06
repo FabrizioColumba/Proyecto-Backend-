@@ -1,6 +1,7 @@
 import cartModel from "../models/cartModel.js";
 import mongoose from "mongoose";
 
+
 export default class CartManager {
     //Crea los carritos
     createCart = (cart) =>{

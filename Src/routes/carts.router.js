@@ -4,7 +4,6 @@ import CartManager from "../dao/mongo/managers/cartManager.js";
 const router = Router();
 const cartsManager = new CartManager();
 
-
 //Traigo los carrityos
 router.get("/", async (req, res) => {
     try {

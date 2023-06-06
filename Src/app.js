@@ -4,12 +4,10 @@ import handlebars from "express-handlebars"
 import mongoose from "mongoose";
 import { Server } from  "socket.io";
 
-
 import __dirname from "./util.js";
 import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
-
 
 const app = express();
 const connection = mongoose.connect("mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/EntregaFinal?retryWrites=true&w=majority")

@@ -1,20 +1,30 @@
 import { Router } from "express";
-import UsersManager from '../dao/mongo/mangersMongo/usersManager.js'
-
-const usersService= new UsersManager()
+import userModel from "../dao/mongo/models/userModel.js";
 
 const router= Router()
 
 router.post('/register', async (req,res)=>{
-const result= await usersService.createUser(req.body)
-res.send({status: 'success', payload: result})
+    try {
+        const result = await userModel.create(req.body)
+        res.send({status: 'success', payload: result})
+    } catch (error) {
+        console.log(error);
+        res.send({status:"error", error:"error interno"});
+    }
 })
 
 
 router.post('/login', async (req,res)=>{
-    const {email, password}= req.body
-    const user= await usersService.getUser({email,password})
-
+    const {email, password} = req.body
+    if(email === "adminCoder@coder.com" && password === "coder123"){
+        req.session.user = {
+            name: `AdminCoder`,
+            email: "...",
+            role : "admin"
+        }
+        return res.sendStatus(200);
+    };
+    const user = await userModel.findOne({email,password})
     if(!user) return res.send({status: 'error', error: 'User not found'})
 
     //si existe creo la session: 

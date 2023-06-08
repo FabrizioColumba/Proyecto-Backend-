@@ -50,7 +50,7 @@ app.use(session({
 app.use("/api/carts",cartsRouter);
 app.use("/api/products",productsRouter);
 app.use("/",viewsRouter);
-app.use('/api/sessions',sessionsRouter);
+app.use('/api/session',sessionsRouter);
 
 io.on('connection',socket=>{
   registerChatHandler(io,socket);

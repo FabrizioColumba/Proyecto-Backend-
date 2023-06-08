@@ -1,5 +1,4 @@
-console.log('pag de login')
-const form= document.getElementById('loginForm')
+const form = document.getElementById('loginForm')
 
 form.addEventListener('submit',async (e)=>{
     e.preventDefault()

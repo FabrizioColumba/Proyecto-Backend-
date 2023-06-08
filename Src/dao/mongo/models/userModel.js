@@ -2,12 +2,25 @@ import mongoose from "mongoose";
 
 const collection= 'Users'
 
-const schema= new mongoose.Schema({
-    first_name: String, 
-    last_name: String,
-    email: String,
-    password: String
-})
+const schema = new mongoose.Schema({
+    first_name : {
+        type : String,
+        required : true,
+    },
+    last_name : {
+        type:String,
+        required:true,
+    },
+    email : {
+        type: String,
+        required: true,
+        index : true
+    },
+    password:{
+        type: String,
+        required: true,
+    }
+},{timestamps:{createdAt:`created_at`, updatedAt:`updated_at`}})
 
 const userModel= mongoose.model(collection, schema)
 export default userModel

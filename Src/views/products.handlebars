@@ -1,0 +1,39 @@
+<div>
+    <h1 id="h1">Productos almacenados</h1>
+
+    <h2>Bienvenido, {{user.name}}</h2>
+    <h3>Tu correo registrado es  {{user.email}}</h3>
+
+<ul>
+    {{#each docs}}
+    <li class="cart_container">
+        <article class="card">
+            <h4>{{this.title}}</h4>
+            <p>
+                {{this.description}}
+            </p>
+            <p>$ {{this.price}}</p>
+
+            <form class="add_frm">
+                <input type="text" name="id" value="{{this._id}}" hidden="true">
+                <input type="submit" value="Agregar al Carrito">
+            </form>
+
+        </article>
+    </li>
+    {{/each}}
+    {{#if hasPrevPage}}
+        <a href="/products/?page={{prevPage}}&limit={{limit}}">Anterior</a>
+    {{/if}}
+
+    {{#if page}}
+        {{page}}
+    {{/if}}
+
+
+    {{#if hasNextPage}}
+        <a href="/products/?page={{nextPage}}&limit={{limit}}">Siguiente</a>
+    {{/if}}
+</ul>
+<script src="/js/products.js"></script>
+</div>

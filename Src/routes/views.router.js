@@ -23,15 +23,18 @@ router.get('/chat',privacy("PRIVATE"), async(req,res)=>{
     res.render('chat')
 })
 //register
-router.get('/register', (req, res)=>{
-    res.render('register')
+router.get('/register',privacy('NO_AUTHENTICATED'),(req,res)=>{
+    res.render('register');
 })
 
-//login
-router.get('/login', (req,res)=>{
+router.get('/login',privacy('NO_AUTHENTICATED'),(req,res)=>{
     res.render('login')
 })
-
+router.get('/profile',privacy('PRIVATE'),(req,res)=>{
+    res.render('profile',{
+        user:req.session.user
+    })
+})
 //Vista del carrito
 router.get('/carts/:cid', async(req,res) => {
     const {cid} = req.params;

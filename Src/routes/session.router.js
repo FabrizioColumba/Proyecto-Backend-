@@ -1,38 +1,56 @@
 import { Router } from "express";
-import userModel from "../dao/mongo/models/userModel.js";
+import passport from "passport";
 
 const router= Router()
 
-router.post('/register', async (req,res)=>{
-    try {
-        const result = await userModel.create(req.body)
-        res.send({status: 'success', payload: result})
-    } catch (error) {
-        console.log(error);
-        res.send({status:"error", error:"error interno"});
-    }
+router.post('/register',passport.authenticate("register",{failureRedirect:"api/sessions/registerFail"}),async(req,res)=>{
+    res.send({status:"success",messages:"Registered"});
 })
 
+router.get("/registerFail",(req,res)=>{
+    console.log(req.session.messages);
+    res.status(400).send({status:"error",error:req.session.messages});
+})
 
 router.post('/login', async (req,res)=>{
-    const {email, password} = req.body
-    if(email === "adminCoder@coder.com" && password === "coder123"){
-        req.session.user = {
-            name: `AdminCoder`,
-            email: "...",
-            role : "admin"
-        }
-        return res.sendStatus(200);
-    };
-    const user = await userModel.findOne({email,password})
-    if(!user) return res.send({status: 'error', error: 'User not found'})
-
-    //si existe creo la session: 
     req.session.user = {
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email
+        name: `${req.user.first_name} ${req.user.last_name}`,
+        role: req.user.role,
+        id: req.user.id,
+        email: req.user.email
     }
-    res.send({status: "success", })
+    return res.sendStatus(200);
 })
+router.get("/loginFail",(req,res)=>{
+    console.log(req.session.messages);
+    res.status(400).send({status:"error",error:req.session.messages});
+});
+
+router.get('/github',passport.authenticate('github'),(req,res)=>{});
+
+router.get('/githubcallback',passport.authenticate('github'),(req,res)=>{
+    const user = req.user;
+    req.session.user = {
+        id: user.id,
+        name: user.first_name,
+        role:user.role,
+        email:user.email
+    }
+    res.send({status:"success",message:"Logueado con GitHub!"})
+})
+
+router.get('/logout', async (req, res) => {
+    try {
+        req.session.destroy(error => {
+            if (error) {
+                console.log(error);
+            }
+        })
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error, 'logout error');
+    }
+})
+
 
 export default router

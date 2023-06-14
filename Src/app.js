@@ -4,14 +4,17 @@ import mongoose from "mongoose";
 import { Server } from  "socket.io";
 import MongoStore from "connect-mongo";
 import session from "express-session";
+import passport from "passport";
 
-import __dirname from "./util.js";
 
 import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
 import sessionsRouter from './routes/session.router.js';
 import registerChatHandler from "./listeners/chatHandler.js"
+import initializePassportStrategies from './config/passport.config.js';
+
+import __dirname from "./util.js";
 
 const app = express();
 const connection = mongoose.connect("mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/modulo2?retryWrites=true&w=majority")
@@ -45,6 +48,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
+app.use(passport.initialize());
+initializePassportStrategies();
+
 
 //Routers
 app.use("/api/carts",cartsRouter);

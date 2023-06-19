@@ -12,7 +12,7 @@ router.get("/registerFail",(req,res)=>{
     res.status(400).send({status:"error",error:req.session.messages});
 })
 
-router.post('/login', async (req,res)=>{
+router.post('/login',passport.authenticate("login",{failureRedirect:"api/sessions/loginFail"}), async (req,res)=>{
     req.session.user = {
         name: `${req.user.first_name} ${req.user.last_name}`,
         role: req.user.role,

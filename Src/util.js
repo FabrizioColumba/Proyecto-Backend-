@@ -3,6 +3,10 @@ import { dirname } from 'path';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 export const createHash = async (password) =>{
     //Generar los salts
     const salts = await bcrypt.genSalt(10);
@@ -10,8 +14,6 @@ export const createHash = async (password) =>{
 }
 export const validatePassword = (password, hashedPassword) => bcrypt.compare(password, hashedPassword);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 
 export const generateToken= (user)=>{

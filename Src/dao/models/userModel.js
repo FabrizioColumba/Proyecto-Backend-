@@ -15,6 +15,12 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    cart:[
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+             ref: 'Carts',
+        }
+    ],
     role:{
         type: String,
         default:"user",

@@ -1,12 +1,19 @@
 import passport from 'passport';
 import local from 'passport-local';
 import GithubStrategy from 'passport-github2';
-import userModel from '../dao/mongo/models/userModel.js';
+import { UserServices } from '../services/services.js';
+import { CartServices } from '../services/services.js';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import {createHash,validatePassword } from '../util.js';
 import { cookieExtractor } from '../middlewares/auth.js';
+import config from '../config.js'; 
+import CartsServices from '../services/cartServices.js';
+
 
 const LocalStrategy = local.Strategy;
+const admin1 = config.admin.emailemail1
+const admin2 = config.admin.emailemail2
+const adminPassword = config.admin.adminPassword
 
 const initializePassportStrategies = () => {
   passport.use(
@@ -16,21 +23,22 @@ const initializePassportStrategies = () => {
       async (req, email, password, done) => {
         try {
           const { first_name, last_name } = req.body;
-
-          const exists = await userModel.findOne({ email });
+          const exists = await UserServices.getUser({ email });
 
           if (exists) return done(null, false, { message: 'El usuario ya existe' });
+          else{
+            const hashedPassword = await createHash(password);
+            const cart = await CartsServices.createCart();
 
-          const hashedPassword = await createHash(password);
-
-          const user = {
-            first_name,
-            last_name,
-            email,
-            password: hashedPassword,
-          };
-          const result = await userModel.create(user);
-          done(null, result);
+            const user = {
+              first_name,
+              last_name,
+              email,
+              password: hashedPassword,
+            };
+            const result = await UserServices.createUser(user);
+            done(null, result);
+          }
         } catch (error) {
           done(error);
         }
@@ -43,9 +51,9 @@ const initializePassportStrategies = () => {
     new LocalStrategy(
       { usernameField: 'email' },
       async (email, password, done) => {
-        if(email === "adminCoder@coder.com" && password === "coder123"){
+        if(email === "admin2" && password === "adminPassword"){
             const user = {
-                name: `AdminCoder`,
+                name: `Admin`,
                 email: "...",
                 role : "admin"
             }
@@ -53,7 +61,7 @@ const initializePassportStrategies = () => {
     };
     let user;
 
-    user = await userModel.findOne({email})
+    user = await UserServices.getUser("email", email)
     if (!user)
           return done(null, false, { message: 'Credenciales incorrectas' });
     
@@ -86,14 +94,14 @@ const initializePassportStrategies = () => {
         try {
           console.log(profile);
           const { name, email } = profile._json;
-          const user = await userModel.findOne({ email });
+          const user = await UserServices.getUser({ email });
           if(!user) {
             const newUser =  {
               first_name: name,
               email,
               password:''
             }
-            const result = await userModel.create(newUser);
+            const result = await UserServices.createUser(newUser);
             done(null,result);
           }
           done(null,user);

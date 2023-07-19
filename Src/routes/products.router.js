@@ -10,6 +10,8 @@ export default class ProductRouter extends BaseRouter {
 
     this.get('/:pid', ["PUBLIC"],productController.getProduct )
 
+    this.post('/deleteProduct', productController.deleteProductCart)
+
     this.post('/',["ADMIN"],productController.postProduct)
 
     this.put('/:pid',["ADMIN"],productController.putProduct )

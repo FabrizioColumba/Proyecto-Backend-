@@ -20,6 +20,8 @@ export default class CartsServices{
     
     addProductToCart=(cid,pid)=>{
     return this.dao.addProductToCart(cid,pid)
-    
+    }
+    subtractProduct=(cid,pid)=>{
+        return this.dao.subtractProduct(cid,pid)
     }
 }

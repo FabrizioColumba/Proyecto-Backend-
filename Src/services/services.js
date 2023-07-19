@@ -12,3 +12,8 @@ import ProductManager from "../dao/managers/productsManager.js";
 import ProductServices from "./productServices.js";
 
 export const Productservices = new ProductServices(new ProductManager);
+
+import TicketServices from '../services/tickets.service.js'
+import TicketManager from '../dao/managers/ticketManager.js'
+
+export const TicketServices = new TicketServices(new TicketManager)

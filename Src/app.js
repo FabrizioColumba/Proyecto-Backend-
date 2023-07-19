@@ -8,9 +8,9 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 
 
-import productsRouter from "./routes/products.router.js"
-import cartsRouter from "./routes/carts.router.js"
-import sessionsRouter from './routes/session.router.js';
+import CartRouter from "./routes/carts.router.js"
+import ProductRouter from "./routes/products.router.js";
+import SessionRouter from "./routes/session.router.js";
 import registerChatHandler from "./listeners/chatHandler.js"
 import initializePassportStrategies from './config/passport.config.js';
 import config from "./config.js"
@@ -59,8 +59,6 @@ const cartRouter = new CartRouter()
 app.use("/api/cart",cartRouter.getRouter())
 const productsRouter= new ProductRouter()
 app.use("/api/products",productsRouter.getRouter());
-const userRouter= new UserRouter()
-app.use('/api/users', userRouter.getRouter())
 const sessionRouter= new SessionRouter()
 app.use('/api/session',sessionsRouter.getRouter());
 

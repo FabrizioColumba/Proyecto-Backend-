@@ -13,6 +13,8 @@ import ProductRouter from "./routes/products.router.js";
 import SessionRouter from "./routes/session.router.js";
 import registerChatHandler from "./listeners/chatHandler.js"
 import initializePassportStrategies from './config/passport.config.js';
+import moksRouter from "./moks/routerMoks/moks.products.router.js"
+import errorMiddlewares from "./middlewares/errorMiddlewares.js";
 import config from "./config.js"
 import __dirname from "./util.js";
 
@@ -67,6 +69,10 @@ app.use('/',loginAndRegisterview.getRouter())
 app.use('/products',productsView.getRouter())
 app.use('/',cartView.getRouter())
 app.use('/', homeViewRouter.getRouter())
+
+app.use('/smokingsproducts', moksRouter)
+
+app.use(errorHandler)
 
 io.on('connection',socket=>{
   registerChatHandler(io,socket);

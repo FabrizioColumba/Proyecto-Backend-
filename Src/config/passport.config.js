@@ -53,32 +53,36 @@ const initializePassportStrategies = () => {
       async (email, password, done) => {
         if(email === "admin2" && password === "adminPassword"){
             const user = {
+                id:0,
                 name: `Admin`,
                 email: "...",
                 role : "admin"
-            }
+            };
             return done(null,user);
-    };
-    let user;
+            } else{
 
-    user = await UserServices.getUser("email", email)
-    if (!user)
-          return done(null, false, { message: 'Credenciales incorrectas' });
-    
-    //sí existe el usuario, verifica el password encriptado
-
-    const isValidPassword = await validatePassword(password, user.password);
-    if (!isValidPassword)
-    return done(null, false, { message: 'Contraseña inválida' });
-    //si existe y puso su contraseña correcta, devuelvo el usuario
-    user = {
-        first_name: user.first_name,
-        last_name: user.last_name,
-        id: user.id,
-        email: user.email,
-        role: user.role
-    }
-      return done(null, user);
+              let user;
+              
+              user = await UserServices.getUser("email", email)
+            
+            if (!user)
+            return done(null, false, { message: 'Credenciales incorrectas' });
+            
+            //sí existe el usuario, verifica el password encriptado
+            
+            const isValidPassword = await validatePassword(password, user.password);
+            if (!isValidPassword)
+            return done(null, false, { message: 'Contraseña inválida' });
+            //si existe y puso su contraseña correcta, devuelvo el usuario
+            user = {
+              first_name: user.first_name,
+              last_name: user.last_name,
+              id: user.id,
+              email: user.email,
+              role: user.role
+            }
+            return done(null, user);
+          };
     })
   );
 

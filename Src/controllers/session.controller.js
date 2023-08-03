@@ -13,19 +13,42 @@ const registerUser=async (req,res)=>{
 
 const loginUser=async (req,res)=>{
     try{
-               
-        const accessToken = generateToken(req.user);
-
-        res.cookie('authToken',accessToken, {
-            maxAge:1000*60*60*24,
-        }).send({status:'success', message: `llego a login router ${req.user.name}`})
+        if(req.error){
+            res.send({status:'error', error: req.error})
+            req.logger.error(`logger login.Usuario no encontrado: ${req.error}`)  
+        }
+        else{
+            const accessToken = generateToken(req.user);
+            res.cookie('authToken',accessToken, {
+                maxAge:1000*60*60*24,
+            }).send({status:'success', message: `llego a login router ${req.user.name}`})
+        }    
     }
     catch(error){
         console.log(error)
     }
 }
+const loginWidthGitHub=(req,res)=>{
+    try{
+        if(req.error){
+            res.send({status:'error', error: req.error})
+            req.logger.error(`logger login github.Usuario no encontrado: ${req.error}`)
+        }
+        else{
+            const accessToken = generateToken(req.user);
+            res.cookie('authToken',accessToken, {
+            maxAge:1000*60*60*24,
+            })
+            res.redirect('/home')
+    }
+    }
+    catch(error){
+        console.log(error)
+    }
+  }          
 
 export default{
     registerUser,
-    loginUser
+    loginUser,
+    loginWidthGitHub
 }

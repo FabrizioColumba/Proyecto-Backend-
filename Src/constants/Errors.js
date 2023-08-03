@@ -5,3 +5,9 @@ export const DicionarioEErrorProducts={
     OBJETO_YA_CRADO: 4,
     SIN_STOCK_INIXISTENTE:5,
 }
+
+export const DictionaryEErrorCart  = {
+    TOKE_EXPIRADO: 6,
+}
+
+export const DictionaryEErrorSession  = {}

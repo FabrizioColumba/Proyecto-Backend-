@@ -1,13 +1,12 @@
 import passport from 'passport';
 import local from 'passport-local';
 import GithubStrategy from 'passport-github2';
-import { UserServices } from '../services/services.js';
-import { CartServices } from '../services/services.js';
+import { userServices } from '../services/services.js';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import {createHash,validatePassword } from '../util.js';
 import { cookieExtractor } from '../middlewares/auth.js';
 import config from '../config.js'; 
-import CartsServices from '../services/cartServices.js';
+import { cartServices } from '../services/services.js';
 
 
 const LocalStrategy = local.Strategy;
@@ -23,12 +22,12 @@ const initializePassportStrategies = () => {
       async (req, email, password, done) => {
         try {
           const { first_name, last_name } = req.body;
-          const exists = await UserServices.getUser({ email });
+          const exists = await userServices.getUser({ email });
 
           if (exists) return done(null, false, { message: 'El usuario ya existe' });
           else{
             const hashedPassword = await createHash(password);
-            const cart = await CartsServices.createCart();
+            const cart = await cartServices.createCart();
 
             const user = {
               first_name,
@@ -36,7 +35,7 @@ const initializePassportStrategies = () => {
               email,
               password: hashedPassword,
             };
-            const result = await UserServices.createUser(user);
+            const result = await userServices.createUser(user);
             done(null, result);
           }
         } catch (error) {
@@ -63,7 +62,7 @@ const initializePassportStrategies = () => {
 
               let user;
               
-              user = await UserServices.getUser("email", email)
+              user = await userServices.getUser("email", email)
             
             if (!user)
             return done(null, false, { message: 'Credenciales incorrectas' });
@@ -98,14 +97,14 @@ const initializePassportStrategies = () => {
         try {
           console.log(profile);
           const { name, email } = profile._json;
-          const user = await UserServices.getUser({ email });
+          const user = await userServices.getUser({ email });
           if(!user) {
             const newUser =  {
               first_name: name,
               email,
               password:''
             }
-            const result = await UserServices.createUser(newUser);
+            const result = await userServices.createUser(newUser);
             done(null,result);
           }
           done(null,user);

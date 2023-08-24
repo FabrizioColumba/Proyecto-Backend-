@@ -1,0 +1,82 @@
+paths:
+  /api/cart:
+    get:
+      summary: Devuelve el carrito de compras del usuario.
+      tags:
+        - Cart
+      responses:
+        "success":
+          description: Trae el carrito del usuario correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+  /api/cart/{deleteproductcart}:
+    post:
+      summary: Eliminar un producto del carrito.
+      tags:
+        - Cart
+      parameters:
+        - name: deleteproductcart
+          in: path
+          required: true
+          description: nombre de ruta delte product cart (eliminar producto carrito)
+          schema:
+            type: string
+      responses:
+        "success":
+          description: Eliminaste un producto del carrito
+        "error":
+          description: Error al eliminar un producto del carrito
+  /api/cart/{cid}/{purchase}:
+    post:
+      summary: Devuelve información (tiket) sobre un carrito de compras específico.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID del carrito de compras
+        - in: path
+          name: purchase
+          required: true
+          schema:
+            type: string
+          description: nombre del parámetro requerido
+      responses:
+        "success":
+          description: Trae la información del carrito de compras correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "error":
+          description: Error al generar tiket, puede que haya quedado un tiket anterior vigente
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        products:
+          type: array
+          description: Array de productos referenciados de colección Products
+        totalAmount:
+          type: number
+          description: Monto total del carrito de compras
+        totalQuantity:
+          type: number
+          description: Cantidad total de productos
+        _id:
+          type: string
+          description: Identificador autogenerado por Mongo
+          format: ObjectId
+      example:
+        products: []
+        totalAmount: 14141
+        totalQuantity: 2
+        _id: ObjectId("idswagger12345")

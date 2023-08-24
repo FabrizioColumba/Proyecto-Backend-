@@ -1,4 +1,4 @@
-import cartModel from "../mongo/models/cartModel.js";
+import cartModel from "../models/cartModel.js";
 import productModel from "../models/productsModel.js";
 
 

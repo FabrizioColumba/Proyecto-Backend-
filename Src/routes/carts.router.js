@@ -7,11 +7,12 @@ import ticketControllers from '../controllers/ticket.controllers.js'
 
 export default class CartRouter extends BaseRouter {
     init(){
-        this.get("/",["USER"], cartControllers.getUserCart)
+        this.get("/",["USER","PREMIUM"], cartControllers.getUserCart)
         
-        this.post("/deleteproductincart",["USER"], productController.deleteProductCart)
+        this.post("/deleteproductincart",["USER","PREMIUM"], productController.deleteProductCart)
         
-        this.post('/:cid/purchase', ['USER'],  generateTiketsData, ticketControllers.operacionTiket)
+        this.post('/:cid/purchase', ["USER","PREMIUM"],  generateTiketsData, ticketControllers.operacionTiket)
+    
     }
 }
 

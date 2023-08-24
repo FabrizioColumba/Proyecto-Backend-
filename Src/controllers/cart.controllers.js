@@ -1,4 +1,4 @@
-getUserCart = async(req,res)=>{
+const getUserCart = async(req,res)=>{
     try{
         cart= req.user.cart
         console.log(req.user.cart)

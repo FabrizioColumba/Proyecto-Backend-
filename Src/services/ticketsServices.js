@@ -1,5 +1,3 @@
-import TiketManager from '../dao/managers/tiketManager.js'
-
 
 export default class TiketServices{
     constructor(dao){

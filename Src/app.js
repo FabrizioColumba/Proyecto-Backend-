@@ -6,17 +6,20 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 
 
 import CartRouter from "./routes/carts.router.js"
 import ProductRouter from "./routes/products.router.js";
 import SessionRouter from "./routes/session.router.js";
-import registerChatHandler from "./listeners/chatHandler.js"
 import initializePassportStrategies from './config/passport.config.js';
 import moksRouter from "./moks/routerMoks/moks.products.router.js"
+
 import errorMiddlewares from "./middlewares/errorMiddlewares.js";
 import config from "./config.js"
 import __dirname from "./util.js";
+
 
 const app = express();
 const connection = mongoose.connect("mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/modulo2?retryWrites=true&w=majority")
@@ -56,23 +59,30 @@ app.use(passport.initialize());
 initializePassportStrategies();
 
 
+const swaggerOptions={
+  definition:{
+      openapi: '3.0.1',
+      info:{
+          title: 'AmoElFutbol Shop',
+          description: 'Tienda para amantes del futbol.'
+      }
+  },
+  apis: [ `${__dirname}/./docs/**/*.yaml`]
+}
+
+const specifications= swaggerJSDoc(swaggerOptions)
+app.use('/docs' , swaggerUiExpress.serve, swaggerUiExpress.setup(specifications))
+
+
 //Routers
 const cartRouter = new CartRouter()
 app.use("/api/cart",cartRouter.getRouter())
 const productsRouter= new ProductRouter()
 app.use("/api/products",productsRouter.getRouter());
 const sessionRouter= new SessionRouter()
-app.use('/api/session',sessionsRouter.getRouter());
-
-
-app.use('/',loginAndRegisterview.getRouter())
-app.use('/products',productsView.getRouter())
-app.use('/',cartView.getRouter())
-app.use('/', homeViewRouter.getRouter())
+app.use('/api/session', sessionRouter.getRouter());
 
 app.use('/smokingsproducts', moksRouter)
-
-app.use(errorHandler)
 
 io.on('connection',socket=>{
   registerChatHandler(io,socket);

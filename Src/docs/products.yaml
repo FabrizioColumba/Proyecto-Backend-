@@ -1,0 +1,176 @@
+paths:
+  /api/products:
+    get:
+      summary: Devuelve los productos.
+      tags:
+        - Productos
+      responses:
+        "success":
+          description: Trae los productos disponibles de la base de datos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+
+  /api/products/{addProduct}:
+    post:
+      summary: Añade un producto al carrito.
+      tags:
+        - Productos
+      parameters:
+        - name: addProduct
+          in: path
+          required: true
+          description: Nombre de la ruta para agregar un producto al carrito
+          schema:
+            type: string
+      responses:
+        "success":
+          description: Producto agregado al carrito con éxito
+        "error":
+          description: Error interno
+          
+  /api/products/{pid}:
+    get:
+      summary: Obtener un producto por su ID.
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+        - in: query
+          name: purchase
+          required: true
+          schema:
+            type: string
+          description: Nombre del parámetro requerido
+      responses:
+        "success":
+          description: Trae la información del producto correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "error":
+          description: Error al encontrar el producto, puede que el producto no esté disponible
+    put:
+      summary: Modificar un producto.
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto en la URL
+      responses:
+        "success":
+          description: Producto modificado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "error":
+          description: Error del servidor, verifica la conexión y los datos ingresados
+     delete:
+      summary: Eliminar un producto.
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: deleteProduct
+          required: true
+          schema:
+            type: string
+          description: Opción para eliminar el producto
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto a eliminar en la URL
+      responses:
+        "success":
+          description: Producto eliminado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "error":
+          description: Error del servidor, verifica la conexión  
+  /api/cart/{newproduct}:
+    post:
+      summary: Agregar un nuevo producto.
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: newproduct
+          required: true
+          schema:
+            type: string
+          description: Nuevo producto
+      responses:
+        "success":
+          description: Nuevo producto generado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "error":
+          description: Error del servidor, verifica la conexión y los datos ingresados
+  
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: descripción del producto
+        price:
+          type: number
+          description: precio del producto
+        category:
+          type: string
+          description: categoría del producto
+        stock:
+          type: number
+          description: número del producto disponibles
+        code:
+          type: string
+          description: código del producto
+        thumbnail:
+          type: array
+          description: imágenes asociadas del producto
+        quantity:
+          type: number
+          description: cantitdad inicial del producto agregado
+        owner:
+          type: string
+          description: ombre del creador del producto, en su defecto admin
+        _id:
+          type: string
+          description: Identificador autogenerado por Mongo
+          format: ObjectId
+      example:
+        title: Botines Nike Mercurial
+        description: Botines de futbol Nike Mercurial
+        price: 30000
+        category: Zapatillas deportivas
+        stock: 20
+        code: hlhlhlhl
+        img: url
+        quantity: 1
+        owner: Admin
+        _id: ObjectId("idswagger12345")

@@ -1,16 +1,16 @@
-import { CartServices, Productservices } from "../services/services"
+import { cartServices, productServices } from "../services/services.js";
 
 export const generateTiketsData= async(req,res,next)=>{
     const user = req.user
               const cid = req.user.cart[0]._id
-              const cart = await CartServices.getCartById(cid)
+              const cart = await cartServices.getCartById(cid)
               const useremail = req.user.email
               const products =cart.products
   
               const productIds = products.map(p => p._id).join(',')
               let listid= []
               listid.push(productIds)
-              const productsColection = await Productservices.getProducts({ _id: { $in: listid } });
+              const productsColection = await productServices.getProducts({ _id: { $in: listid } });
         
               const listFinalDeProducts = [];
               for (let i = 0; i < products.length; i++) {

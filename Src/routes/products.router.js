@@ -1,26 +1,22 @@
 import BaseRouter from "./base.router.js";
-import { CartServices, ProductServices } from "../services/services.js";
+import { cartServices, productServices } from "../services/services.js";
 import productController from "../controllers/product.controller.js";
 
 export default class ProductRouter extends BaseRouter {
   init(){
-    this.get('/',["PUBLIC"],productController.getProducts)
+    this.get('/',["USER","PREMIUM","ADMIN"],productController.getProducts)
 
-    this.post('/', ["USER"], productController.addProductCart)
+    this.post('/addProduct', ["USER","PREMIUM"], productController.addProductCart)
 
     this.get('/:pid', ["PUBLIC"],productController.getProduct )
 
-    this.post('/cargoproduct',["ADMIN"],productController.postProduct)
-    
-    this.post('/deleteProduct', productController.deleteProductCart)
+    this.post('/newproduct',["ADMIN","PREMIUM"],productController.postProduct)
 
-    this.post('/',["ADMIN"],productController.postProduct)
+    this.put('/:pid',["ADMIN","PREMIUM"],productController.putProduct )
 
-    this.put('/:pid',["ADMIN"],productController.putProduct )
-
-    this.delete('/:pid',["ADMIN"],async (req,res)=>{
+    this.delete('/:pid',["ADMIN","PREMIUM"],async (req,res)=>{
         const {pid}= req.params
-        const deleteProduct= await ProductServices.deleteProduct(pid)
+        const deleteProduct= await productServices.deleteProduct(pid)
         res.send({status:'success', message: 'Producto eliminado', payload: deleteProduct})
     })
   }

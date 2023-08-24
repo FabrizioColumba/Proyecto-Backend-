@@ -21,6 +21,10 @@ const schema = new mongoose.Schema({
     quantity:{
         type:Number,
         default:1
+    }, 
+    owner: {
+        type: String,
+        default: 'ADMIN'
     }
     },{timestamp:{createdAt:"created_at",updatedAt:"updated_at"}}
 )

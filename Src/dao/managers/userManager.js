@@ -10,13 +10,21 @@ export default class UsersManager{
         return userModel.findOne({[params]: user}).lean().populate('cart')
     }
 
+    uptateUserRole=(userId, newRole)=>{
+        return userModel.findByIdAndUpdate(userId, { role: newRole }, { new: true })
+    }
+    updateUserBy = (params, user, newData) => {
+        return userModel.findOneAndUpdate({ [params]: user }, newData, { new: true });
+    }
+    
+    updateUser=(uid, user)=>{
+        return userModel.findByIdAndUpdate(uid, {$set: user})
+    }
+    
     createUser=(user)=>{
         return userModel.create(user)
     }
 
-    updateUser=(uid, user)=>{
-        return userModel.findByIdAndUpdate(uid, {$set: user})
-    }
 
     deleteUser=(uid)=>{
         return userModel.findByIdAndDelete(uid)

@@ -7,13 +7,16 @@ const schema = new mongoose.Schema({
     title:String,
     description:String,
     price:Number,
-    category:String,
+    category:{
+        type:String,
+        enum:["Procesadores","Placas de video","Memorias Ram"],
+    },
     stock:{
         type:Number,
         default: 10
     },
     code:String,
-    thumbnail:Array,
+    thumbnail:String,
     status:{
         type:String,
         default:true

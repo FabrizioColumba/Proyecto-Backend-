@@ -106,6 +106,13 @@ const postProduct= async(req,res)=>{
     }
 }
 
+const deleteProduct=async(req,res)=>{
+    const {pid}= req.params
+    const deleteProduct= await productServices.deleteProduct(pid)
+    res.send({status:'success', message: 'Producto eliminado'})
+}
+
+
 const putProduct=async(req,res)=>{
     try{
         const {pid}=req.params
@@ -133,4 +140,5 @@ export default{
     postProduct,
     putProduct,
     deleteProductCart,
+    deleteProduct
 }

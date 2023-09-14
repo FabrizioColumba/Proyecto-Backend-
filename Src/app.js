@@ -8,11 +8,16 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
+import nodemailer from "nodemailer";
 
 
 import CartRouter from "./routes/carts.router.js"
 import ProductRouter from "./routes/products.router.js";
 import SessionRouter from "./routes/session.router.js";
+import UserRouter from "./routes/user.router.js";
+import EmailRouter from "./routes/email.router.js";
+import DocumentsRouter from "./routes/documents.router.js";
+
 import initializePassportStrategies from './config/passport.config.js';
 import moksRouter from "./moks/routerMoks/moks.products.router.js"
 
@@ -75,13 +80,19 @@ app.use('/docs' , swaggerUiExpress.serve, swaggerUiExpress.setup(specifications)
 
 
 //Routers
+const documentsRouter= new DocumentsRouter()
+app.use('/api/documents', documentsRouter.getRouter())
+app.use('/', loggerRouter)
+const userRouter= new UserRouter()
+app.use('/api/users', userRouter.getRouter())
 const cartRouter = new CartRouter()
 app.use("/api/cart",cartRouter.getRouter())
 const productsRouter= new ProductRouter()
 app.use("/api/products",productsRouter.getRouter());
 const sessionRouter= new SessionRouter()
 app.use('/api/session', sessionRouter.getRouter());
-
+const emailRouter= new EmailRouter()
+app.use('/api/email', emailRouter.getRouter())
 app.use('/smokingsproducts', moksRouter)
 
 io.on('connection',socket=>{

@@ -20,5 +20,11 @@ export const generateToken= (user)=>{
     const token= jwt.sign(user,'JwtKeySecret', {expiresIn: '24h'})
     return token
 }
+export const generateMailTemplate= async (template, payload)=>{
+    const content= await fs.promises.readFile(`${__dirname}/templates/${template}.handlebars`, 'utf-8')
+    const preCompiled= Handlebars.compile(content)
+    const compiledContent= preCompiled({...payload})
+    return compiledContent
+}
 
 export default __dirname

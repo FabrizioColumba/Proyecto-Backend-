@@ -8,18 +8,22 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
-import nodemailer from "nodemailer";
 
 
 import CartRouter from "./routes/carts.router.js"
 import ProductRouter from "./routes/products.router.js";
 import SessionRouter from "./routes/session.router.js";
-import UserRouter from "./routes/user.router.js";
+import UserRouter from "./routes/userView.router.js";
 import EmailRouter from "./routes/email.router.js";
 import DocumentsRouter from "./routes/documents.router.js";
-
+import loggerRouter from "./routes/loggerRouter/logger.router.js"
 import initializePassportStrategies from './config/passport.config.js';
 import moksRouter from "./moks/routerMoks/moks.products.router.js"
+import UserView from "./routes/viewsRouter/userView.router.js";
+import { loginAndRegisterview } from "./services/viewsServices.js";
+import {productsView} from './services/viewsServices.js'
+import {cartView} from './services/viewsServices.js'
+import {homeView} from './services/viewsServices.js'
 
 import errorMiddlewares from "./middlewares/errorMiddlewares.js";
 import config from "./config.js"
@@ -52,7 +56,7 @@ app.set("view engine", "handlebars");
 
 app.use(session({
   store: new MongoStore({
-      mongoUrl: "mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/modulo2?retryWrites=true&w=majority",
+      mongoUrl: "mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/EntregaFinal?retryWrites=true&w=majority",
       ttl: 20
   }),
   secret: 'CoderS3cret',
@@ -68,8 +72,8 @@ const swaggerOptions={
   definition:{
       openapi: '3.0.1',
       info:{
-          title: 'AmoElFutbol Shop',
-          description: 'Tienda para amantes del futbol.'
+          title: 'Tecno Tienda Gamer',
+          description: 'Tienda de componentes gamers .'
       }
   },
   apis: [ `${__dirname}/./docs/**/*.yaml`]
@@ -80,10 +84,10 @@ app.use('/docs' , swaggerUiExpress.serve, swaggerUiExpress.setup(specifications)
 
 
 //Routers
-const documentsRouter= new DocumentsRouter()
+const documentsRouter = new DocumentsRouter()
 app.use('/api/documents', documentsRouter.getRouter())
 app.use('/', loggerRouter)
-const userRouter= new UserRouter()
+const userRouter = new UserRouter()
 app.use('/api/users', userRouter.getRouter())
 const cartRouter = new CartRouter()
 app.use("/api/cart",cartRouter.getRouter())
@@ -98,4 +102,9 @@ app.use('/smokingsproducts', moksRouter)
 io.on('connection',socket=>{
   registerChatHandler(io,socket);
 })
-
+app.use('/',loginAndRegisterview.getRouter())
+app.use('/products',productsView.getRouter())
+app.use('/',cartView.getRouter())
+app.use('/', homeView.getRouter())
+const userViewRouter = new UserView()
+app.use('/users', userViewRouter.getRouter())

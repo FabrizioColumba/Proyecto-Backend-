@@ -1,3 +1,5 @@
+import { cartServices } from "../services/services.js"
+
 const getUserCart = async(req,res)=>{
     try{
         cart= req.user.cart
@@ -8,7 +10,19 @@ const getUserCart = async(req,res)=>{
         console.log(error)
       }
 }
-
-export default{
-    getUserCart
-}
+const clearCart=async (req,res)=>{
+  try{
+    const cid= req.body.cid
+    const result=await cartServices.clearCart(cid)
+    res.send({status:'success'})
+  }
+  catch(error){
+    console.log(error)
+  }
+  }
+  
+  
+  export default{
+      getUserCart,
+      clearCart
+  }

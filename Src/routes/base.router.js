@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { passportCall } from "../middlewares/auth.js"
+import { passportCall } from "../util.js";
 
 export default class BaseRouter {
     constructor() {
@@ -36,9 +36,11 @@ export default class BaseRouter {
         return (req,res,next) => {
             if(policies[0]==="PUBLIC") return next();
             const user = req.user;
+            console.log(user)
             if(policies[0]==="NO_AUTH"&&user) return res.status(401).send({status:"error",error:"Unauthorized"});
             if(policies[0]==="NO_AUTH"&&!user) return next();
             if(!user)res.redirect('/login')
+            
             if(!policies.includes(user.role.toUpperCase())) return res.status(403).send({status:"error",error:"Forbidden"});
             next();
         }

@@ -1,0 +1,57 @@
+.productCard{
+  
+    margin: 5px;
+    padding: 5px;
+    background-color: rgba(252, 241, 241, 0.403);
+}
+.bodyContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 700px;
+}
+.productsContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px;
+    
+    
+}
+.btnsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;  
+    margin: auto;
+    background-color: rgba(252, 241, 241, 0.403);
+   
+}
+
+
+.btnsContainer button{
+   
+    border: 1px solid rgb(3, 3, 4);
+    background-color: rgba(252, 241, 241, 0.403);
+    border-radius: 6px;
+    padding: 5px;
+}
+
+
+.numberPage{
+    font-size: larger;
+    padding: 5px;
+}
+
+.btnCard{
+   
+    border: 1px solid rgb(3, 3, 4);
+    background-color: rgba(252, 241, 241, 0.403);
+    color: white;
+    border-radius: 6px;
+    padding: 5px;
+}

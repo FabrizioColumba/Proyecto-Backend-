@@ -9,3 +9,5 @@ router.get('/loggerTest', (req,res)=>{
         
     res.send({message:'Loggers'})
 })
+
+export default router

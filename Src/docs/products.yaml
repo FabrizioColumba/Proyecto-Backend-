@@ -1,6 +1,6 @@
 paths:
   /api/products:
-    get:
+      get:
       summary: Devuelve los productos.
       tags:
         - Productos
@@ -34,7 +34,7 @@ paths:
           
   /api/products/{pid}:
     get:
-      summary: Obtener un producto por su ID.
+      summary: Obtener un producto específico por su ID en la URL.
       tags:
         - Productos
       parameters:
@@ -79,32 +79,6 @@ paths:
                 $ref: "#/components/schemas/Product"
         "error":
           description: Error del servidor, verifica la conexión y los datos ingresados
-     delete:
-      summary: Eliminar un producto.
-      tags:
-        - Productos
-      parameters:
-        - in: path
-          name: deleteProduct
-          required: true
-          schema:
-            type: string
-          description: Opción para eliminar el producto
-        - in: path
-          name: pid
-          required: true
-          schema:
-            type: string
-          description: ID del producto a eliminar en la URL
-      responses:
-        "success":
-          description: Producto eliminado correctamente
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Product"
-        "error":
-          description: Error del servidor, verifica la conexión  
   /api/cart/{newproduct}:
     post:
       summary: Agregar un nuevo producto.

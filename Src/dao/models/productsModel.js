@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
         default: 10
     },
     code:String,
-    thumbnail:String,
+    img:String,
     status:{
         type:String,
         default:true

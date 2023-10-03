@@ -11,7 +11,7 @@ btnDeleteProductCart.forEach(btn => {
             pid:pid
         }
 
-        fetch('/api/cart/deleteproductincart',{
+        fetch('/api/cart/deleteproductcart',{
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,7 +20,8 @@ btnDeleteProductCart.forEach(btn => {
         })
         .then((response)=>{
             response.json()
-            console.log('El btn borrar product funcioni de manera', response)
+            window.location.replace('/cart')
+            console.log('El btn borrar product funcionia de manera correcta', response)
         }
         )
         .catch(error => {
@@ -31,3 +32,27 @@ btnDeleteProductCart.forEach(btn => {
 
     })
 });
+const btnCancelarCompra=document.getElementById('btnCancelarCompra')
+btnCancelarCompra.addEventListener('click', ()=>{
+   try{
+    const cartId =  btnCancelarCompra.getAttribute('data-cart-id')
+    fetch('/api/cart/clearCart',{
+        method: 'POST',
+        body: JSON.stringify({cid:cartId}),
+        headers:{
+            'Content-Type':'application/json '
+        } 
+    })
+    .then(response=> response.json())
+    .then(data=>{
+        if(data.status=== "success"){
+            window.location.replace('/home')
+        }
+       })  
+    }
+
+   catch(error){
+    console.log(error)
+   }
+})
+

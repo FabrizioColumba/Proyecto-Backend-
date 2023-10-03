@@ -15,12 +15,15 @@ form.addEventListener('submit',async (e)=>{
             } 
         })
         const responseData= await response.json()
-        if(responseData.status === 'success'){
-            window.location.replace('/products')
+        if(responseData.status === 'error'){
+            const error= responseData.error
+            const spamUserNotFound= document.getElementById('spamUserNotFound')
+            spamUserNotFound.innerText= error
+            form.reset()
         }
     }
     catch(err){
-        console.log(err)
+        console.log(err, 'error del server en login.js')
     }
    
 })

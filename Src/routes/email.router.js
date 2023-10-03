@@ -2,7 +2,7 @@ import BaseRouter from "./base.router.js";
 import Dtemplates from '../constants/Dtemplates.js'
 import MailingService from "../services/MailServices/mail.js";
 
-const mailingService= new MailingService()
+const mailingService = new MailingService()
 
 export default class EmailRouter extends BaseRouter{
     init(){

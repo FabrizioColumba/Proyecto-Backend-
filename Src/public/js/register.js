@@ -18,6 +18,11 @@ form.addEventListener('submit',async (e)=>{
         if(responseData.status === 'success'){
             window.location.replace('/login')
         }
+        if(data.status === 'error'){
+            const aletErrorRegister= document.getElementById('aletErrorRegister')
+            const msj= data.error
+            aletErrorRegister.innerText= msj 
+          }
     }
     catch(err){
         console.log(err)

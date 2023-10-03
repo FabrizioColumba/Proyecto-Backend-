@@ -1,39 +1,85 @@
-<div>
-    <h1 id="h1">Productos almacenados</h1>
+<nav class="navContainer">
+    <ul class="nav-ul">
 
-    <h2>Bienvenido, {{user.name}}</h2>
-    <h3>Tu correo registrado es  {{user.email}}</h3>
+        </div>
+            <li><a href="/home" class="nav-item">HOME</a></li>
+        <div>
+    
+         <li><a href="/products/?category=placasdevide" class="nav-item">Placas de video</a></li>
+         <li><a href="/products/?category=procesadores" class="nav-item">Procesadores</a></li>
+         <li><a href="/products/?category=ram" class="nav-item" >Memorias Ram</a></li>
+    </ul>
+</nav>
 
-<ul>
-    {{#each docs}}
-    <li class="cart_container">
-        <article class="card">
-            <h4>{{this.title}}</h4>
-            <p>
-                {{this.description}}
-            </p>
-            <p>$ {{this.price}}</p>
 
-            <form class="add_frm">
-                <input type="text" name="id" value="{{this._id}}" hidden="true">
-                <input type="submit" value="Agregar al Carrito">
-            </form>
+<div class="bodyContainer">
+<div class="productsContainer">
+    {{#each products}}
+  <div class="productCard">
+        <img src={{this.img}} alt={{this.description}}>
+        <p>Title:{{this.title}}</p>
+        <p>Description: {{this.description}} </p>
+        <p>Category:{{this.category}} </p>
+        <p>Price:{{this.price}}</p>
 
-        </article>
-    </li>
+        {{#if ../isUserOrPremium}}
+        <button id="btn-subtract-product" class="btn-subtract-product">-</button>
+        <span id="spam-quantity" class="spam-quantity">1</span>
+        <button id="btn-add-more-product" class="btn-add-more-product"  data-stock="{{this.stock}}">+</button>
+        <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
+        <button class="btnDeleteProduct btnUpdateAndDelete"  data-product-id="{{this._id}}">Eliminar producto</button>
+        {{/if}}
+
+    </div>
     {{/each}}
+</div>
+
+
+
+
     {{#if hasPrevPage}}
-        <a href="/products/?page={{prevPage}}&limit={{limit}}">Anterior</a>
+    <div class="btnsContainer"></div>
+    <a href="/products/?page={{prevPage}}"><button> < Anterior</button> </a>
     {{/if}}
 
-    {{#if page}}
-        {{page}}
-    {{/if}}
-
+    <div class="numberPage">
+   {{page}}
+    </div>
 
     {{#if hasNextPage}}
-        <a href="/products/?page={{nextPage}}&limit={{limit}}">Siguiente</a>
+    <a href="/products/?page={{nextPage}}"><button>Próxima > </button> </a>
+    </div>
     {{/if}}
-</ul>
-<script src="/js/products.js"></script>
+
+
+{{#if productsfilter}}
+<div class="productsContainer"> 
+{{#each productsfilter}}
+  <div class="productCard">
+       <img src={{this.img}} alt={{this.description}}>
+        <p>Title:{{this.title}}</p>
+        <p>Description: {{this.description}} </p>
+        <p>Category:{{this.category}} </p>
+        <p>Price:{{this.price}}</p>
+
+        {{#if ../isUserOrPremium}}
+        <button id="btn-subtract-product" class="btn-subtract-product">-</button>
+        <span id="spam-quantity" class="spam-quantity">1</span>
+        <button id="btn-add-more-product" class="btn-add-more-product"  data-stock="{{this.stock}}">+</button>
+        <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
+        <button class="btnDeleteProduc btnUpdateAndDelete"  data-product-id="{{this._id}}" >Eliminar producto</button>
+        {{/if}}
+       
+
+    </div>
+{{/each}}
 </div>
+{{/if}}
+
+</div>
+
+ <script src="../public//js/products.js"></script> 
+
+
+
+

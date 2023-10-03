@@ -1,10 +1,9 @@
 import passport from 'passport';
 import local from 'passport-local';
+import { Strategy, ExtractJwt } from 'passport-jwt';
+import {createHash,validatePassword, cookieExtractor } from '../util.js';
 import GithubStrategy from 'passport-github2';
 import { userServices } from '../services/services.js';
-import { Strategy, ExtractJwt } from 'passport-jwt';
-import {createHash,validatePassword } from '../util.js';
-import { cookieExtractor } from '../middlewares/auth.js';
 import config from '../config.js'; 
 import { cartServices } from '../services/services.js';
 
@@ -21,20 +20,30 @@ const initializePassportStrategies = () => {
       { passReqToCallback: true, usernameField: 'email' },
       async (req, email, password, done) => {
         try {
-          const { first_name, last_name } = req.body;
-          const exists = await userServices.getUser({ email });
+          const { first_name, last_name, role,user_name } = req.body;
+          if(!first_name && !last_name && !email && !password){
+            return done(null, false, { message:'Datos incompletos' });
+          }
+          
+          const exists = await userServices.getUser("email", email );
 
-          if (exists) return done(null, false, { message: 'El usuario ya existe' });
-          else{
+          if (exists){
+           return done(null, false, { message: 'El usuario ya existe' });
+          }
+          else {
             const hashedPassword = await createHash(password);
             const cart = await cartServices.createCart();
 
             const user = {
               first_name,
               last_name,
+              user_name,
               email,
               password: hashedPassword,
+              role,
+              cart: cart._id
             };
+            const newUser= RegisterUserDTO.getFrom(user)
             const result = await userServices.createUser(user);
             done(null, result);
           }
@@ -51,11 +60,13 @@ const initializePassportStrategies = () => {
       { usernameField: 'email' },
       async (email, password, done) => {
         if(email === "admin2" && password === "adminPassword"){
+            const userAdmin = await userServices.getUser("email",email)
             const user = {
-                id:0,
+                id: userAdmin._id,
                 name: `Admin`,
                 email: "...",
-                role : "admin"
+                role : "ADMIN",
+                user_name: "admin"
             };
             return done(null,user);
             } else{
@@ -67,18 +78,17 @@ const initializePassportStrategies = () => {
             if (!user)
             return done(null, false, { message: 'Credenciales incorrectas' });
             
-            //sí existe el usuario, verifica el password encriptado
-            
             const isValidPassword = await validatePassword(password, user.password);
-            if (!isValidPassword)
+            if (!isValidPassword){
             return done(null, false, { message: 'Contraseña inválida' });
-            //si existe y puso su contraseña correcta, devuelvo el usuario
+            }
+
             user = {
-              first_name: user.first_name,
-              last_name: user.last_name,
-              id: user.id,
-              email: user.email,
-              role: user.role
+             id: user._id,
+             name: `${user.first_namename}``${user.last_namename}`,
+             email: user.email,
+             role: user.role,
+             cart: user.cart
             }
             return done(null, user);
           };
@@ -95,7 +105,6 @@ const initializePassportStrategies = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log(profile);
           const { name, email } = profile._json;
           const user = await userServices.getUser({ email });
           if(!user) {
@@ -119,12 +128,7 @@ const initializePassportStrategies = () => {
     jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor]),
     secretOrKey:'JwtKeySecret'
   }, async(payload,done)=>{
-    try {
-      console.log(playload);
       return done(null,payload);
-    } catch (error) {
-      return done(error);
-    }
   }))
 };
 export default initializePassportStrategies;

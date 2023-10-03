@@ -3,10 +3,6 @@ import mongoose from "mongoose";
 const collection= 'Users'
 
 const schema = new mongoose.Schema({
-    imgProfile:{
-        type:String,
-        default:'https://i.pinimg.com/564x/3b/94/6e/3b946eb954f03a7eb2bbe6bfa02a22be.jpg'
-    },
     first_name: String,
     last_name :String,
     email : {
@@ -40,5 +36,5 @@ const schema = new mongoose.Schema({
 
 },{timestamps:{createdAt:`created_at`, updatedAt:`updated_at`}})
 
-const userModel= mongoose.model(collection, schema)
+const userModel = mongoose.model(collection, schema)
 export default userModel

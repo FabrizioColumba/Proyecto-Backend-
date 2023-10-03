@@ -12,7 +12,10 @@ export default class CartRouter extends BaseRouter {
         this.post("/deleteproductincart",["USER","PREMIUM"], productController.deleteProductCart)
         
         this.post('/:cid/purchase', ["USER","PREMIUM"],  generateTiketsData, ticketControllers.operacionTiket)
-    
+        
+        this.get('/clearTiketAndCart/:cid/:tid',["PUBLIC"], ticketControllers.clearTiketAndCart)
+        
+        this.post('/clearCart', ["USER","PREMIUM"],cartControllers.clearCart )
     }
 }
 

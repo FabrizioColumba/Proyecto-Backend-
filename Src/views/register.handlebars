@@ -1,17 +1,20 @@
-<div>
+<div class="inicio-container" >
+<div class="containerFormRegister">
     <h1>
         Regístrate!
     </h1>
-    <form id="registerForm">
-        <label for="">Name:</label>
-        <input type="text" name="first_name">
-        <label for="">Last Name:</label>
-        <input type="text" name="last_name">
-        <label for="">Email:</label>
-        <input type="text" name="email">
-        <label for="">Password:</label> 
-        <input type="text" name="password">
-        <input type="submit" >
+    <form id="registerForm" class="form-clsss">
+        <input type="text" name="first_name" placeholder="First name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required> 
+        <p>Nombre de usuario con el cual te veran!!</p>
+        <input type="text" name="user_name" placeholder="User Nmae" required >
+        <input type="text" name="email" placeholder="email@..." required>
+        <input type="text" name="password" placeholder="password" required>
+        <input type="submit" value="Registrar">
+           
     </form>
+        <span id="aletErrorRegister" class="aletErrorRegister"></span>
+     <a href="/login" class="btn-redirect-login"> Ya estoy registrado!</a>
 </div>
-<script src="/js/register.js" ></script>
+</div>
+<script src="../public/js/register.js"></script>

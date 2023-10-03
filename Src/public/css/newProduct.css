@@ -1,0 +1,23 @@
+.containerNewProduct{
+    padding: 10px;
+}
+.formNewProduct{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px;   
+}
+.formNewProduct * {
+    width: 90%;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 6px;
+    font-size:large;
+ 
+}
+
+.btnNewProduct:hover{
+    background-color:  rgba(68, 4, 243, 0.403);
+}

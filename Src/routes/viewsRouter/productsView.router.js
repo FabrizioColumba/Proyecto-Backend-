@@ -1,25 +1,26 @@
 import BaseRouter from "../base.router.js";
 import productModel from "../../dao/models/productsModel.js";
-import { ProductServices } from "../../services/services.js";
-import ProductsServices from "../../services/productServices";
-
-export default class ProductsView extends RouterPadre{
+import { productServices } from "../../services/services.js";
+export default class ProductsView extends BaseRouter{
     init(){
         this.get('/', ["PUBLIC"], async (req,res)=>{
             const { page = 1, category, limit: queryLimit} = req.query
     
-            const defaultLimit = 3
+            const defaultLimit = 6
             const limit = queryLimit ? parseInt(queryLimit) ?? defaultLimit : defaultLimit
-    
+            const role= req.user.role
+            const isUserOrPremiumOrAdmin = role === "USER" || role === "PREMIUM" || role === "ADMIN"
+            
         
             if(category){
-                const productsfilter = await ProductsServices.getProductsTo("category",category)
-               console.log(productsfilter)
+                const productsfilter = await productServices.getProductsTo("category",category)
+            
                 res.render('products',{
                     productsfilter,
                     hasPrevPage: false,
                     hasNextPage: false,
                     productsfilter:productsfilter,
+                    isUserOrPremiumOrAdmin:isUserOrPremiumOrAdmin,
                     css:'products'
                 })
             }else{
@@ -40,6 +41,7 @@ export default class ProductsView extends RouterPadre{
          hasPrevPage,
          prevPage,
          nextPage,
+         isUserOrPremiumOrAdmin:isUserOrPremiumOrAdmin,
          css:'products'
          })
     }

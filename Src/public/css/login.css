@@ -1,0 +1,40 @@
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px;   
+    margin: 30px;
+}
+
+.form-clsss{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color:  rgba(17, 5, 255, 0.403);
+    padding: 20px;
+ 
+}
+.form-clsss input{
+    padding: 5px;
+    margin: 5px;
+}
+
+.link-style{
+    color: black;
+    text-decoration: none;
+}
+.link-style:hover{
+    background-color:  rgba(131, 169, 167, 0.403);
+   border-radius: 6px;
+}
+
+.spamUserNotFound{
+    color: red;
+    font-size: larger;
+    background-color:  rgba(0, 252, 63, 0.745);
+    padding: 3px;
+    margin: 3px;
+}

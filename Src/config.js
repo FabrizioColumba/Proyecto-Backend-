@@ -13,7 +13,8 @@ dotenv.config({
     
 export default {
     app : { 
-    PORT: process.env.PORT || 8080
+    PORT: process.env.PORT || 8080, emailApp: process.env.APP_EMAIL,
+    passwordApp: process.env.APP_PASSWORD
     },
     mongo : {
     URL: process.env.MONGO_URL 

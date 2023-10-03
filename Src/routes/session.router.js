@@ -1,5 +1,5 @@
 import BaseRouter from "./base.router.js";
-import { passportCall } from "../middlewares/auth.js";
+import { passportCall } from "../util.js";
 import sessionController from "../controllers/session.controller.js";
 
 export default class SessionRouter extends BaseRouter{
@@ -12,6 +12,10 @@ export default class SessionRouter extends BaseRouter{
         this.get('/github',["NO_AUTH"],passportCall('github',{strategyType:'locals'}),(req,res)=>{});
 
         this.get('/githubcallback',["NO_AUTH"],passportCall('github',{strategyType:'locals'}),sessionController.loginWidthGitHub)
+    
+        this.post('/restoreRequest', ["PUBLIC"], sessionController.restoreRequest)
+
+        this.post('/newPassRestore',["PUBLIC"], sessionController.newPswRestore )
     }
 }
 

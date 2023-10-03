@@ -3,8 +3,8 @@ export default class CartsServices{
     constructor(dao){
         this.dao= dao
     }
-    createCart=()=>{
-        return this.dao.createCart()
+    createCart=(cart)=>{
+        return this.dao.createCart(cart)
     }
     getCarts=()=>{
         return this.dao.getCarts()
@@ -23,5 +23,8 @@ export default class CartsServices{
     }
     subtractProduct=(cid,pid)=>{
         return this.dao.subtractProduct(cid,pid)
+    }
+    clearCart=(cid)=>{
+        return this.dao.clearCart(cid)
     }
 }

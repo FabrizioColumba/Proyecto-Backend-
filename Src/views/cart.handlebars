@@ -1,14 +1,32 @@
-<div>
-    <h1>Productos agregados al cart:</h1>
-    {{#each cart.products}}
-  
-   <p>Title: {{this.product.title}}</p>
-    <p>Id: {{this.product._id}}</p>
-   <p>Description: {{this.product.description}}</p>
-   <p>Price:$ {{this.product.price}}</p>
-   <p>Category: {{this.product.category}}</p>
-    <p>Quantity: {{this.product.quantity}}</p>
- <hr>
-    {{/each}}
-      
+<div class="cartCard">
+  <h3 value={{totalQuantity}}>Cantidad total de productos:  {{totalQuantity}} </h3>
+  <h3>Total: {{totalAmount}} </h3>
+  {{#each listFinalDeProducts}}
+        <div class="productCart"> 
+</div>           
+<div class="sub-div-cart-card">
+    <div> 
+        <img src={{this.img}} alt={{this.description}} class="img-product-cart">
+        <p>Id: {{this.id}}</p>
+    </div> 
+    <div>
+       <p>Description: {{this.description}}</p>
+       <p>Price:$ {{this.price}}</p>
+       <p>Amount:$ {{this.amount}} </p>
+       <p>Category: {{this.category}}</p>
+        <p>Quantity: {{this.quantity}}</p>
+    </div>
 </div>
+   <div>
+<button class="delete-product-btn" data-product-id="{{this.id}}">Eliminar del carrito</button>
+   </div>
+</div>
+    <hr>
+    {{/each}}
+ </div>
+
+<button data-cart-id="{{cid}}" id="btnGenerarTiket">Finalizar compra</button>
+<button data-cart-id="{{cid}}" id="btnCancelarCompra">Cancelar compra</button>
+
+<script src="../public/js/cart.js"></script>
+<script src="../public/js/ticket.js"></script>      

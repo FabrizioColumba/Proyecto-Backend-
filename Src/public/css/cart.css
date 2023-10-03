@@ -1,0 +1,24 @@
+.productCart img{
+    width: 170px;
+}
+
+.productCart{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center ;
+}
+
+.productCart div{
+    padding: 10px;
+    margin: 10px;
+}
+.img-product-cart{
+    width:80px ;
+}
+.sub-div-cart-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,21 +1,19 @@
-<div>
-
-    <h1>Ahora, logueate</h1>
-
-    <form id="loginForm" >
-
-        <label>Email</label>
-        <input name="email">
-
-        <label>Contraseña</label>
-        <input type="password" name="password">
-
-        <input type="submit">
+<div class="login-container">
+    <h1>Logueate:</h1>
+    <form id="loginForm" class="form-clsss">
+     
+        <label for="">Email:</label>
+        <input type="text" name="email" required>
+       
+        <label for="">Password:</label> 
+        <input type="password" name="password" required>    
+        <input type="submit" value="Entrar">
     </form>
-
+    <span id="spamUserNotFound" class="spamUserNotFound"></span>
+  
+    <h3><a href="/api/session/github" class="link-style"> Ingresar con cuenta de GitHub</a></h3>
+    <h3><a href="/restoreRequest" class="link-style"> ¿Olvidaste tu contraseña? </a></h3>
 </div>
-<p>Tambien puedes ingresar por:</p>
 
-<a href="api/sessions/github"><button>GitHub</button></a>
 
-<script src="/js/login.js"></script>
+<script src="../public/js/login.js"></script>

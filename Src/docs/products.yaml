@@ -1,6 +1,6 @@
 paths:
   /api/products:
-      get:
+    get:
       summary: Devuelve los productos.
       tags:
         - Productos
@@ -14,13 +14,13 @@ paths:
                 items:
                   $ref: "#components/schemas/Product"
 
-  /api/products/{addProduct}:
+  /api/products/{addProductTocart}:
     post:
-      summary: Añade un producto al carrito.
+      summary: Añadir un producto al carrito.
       tags:
         - Productos
       parameters:
-        - name: addProduct
+        - name: addProductTocart
           in: path
           required: true
           description: Nombre de la ruta para agregar un producto al carrito
@@ -30,8 +30,8 @@ paths:
         "success":
           description: Producto agregado al carrito con éxito
         "error":
-          description: Error interno
-          
+          description: Error al agregar un producto al carrito, posiblemente este producto ya no tenga stock o no esté disponible
+
   /api/products/{pid}:
     get:
       summary: Obtener un producto específico por su ID en la URL.
@@ -100,7 +100,34 @@ paths:
                 $ref: "#/components/schemas/Product"
         "error":
           description: Error del servidor, verifica la conexión y los datos ingresados
-  
+  /api/products/{deleteProduct}/{pid}:
+    delete:
+      summary: Eliminar un producto.
+      tags:
+        - Productos
+      parameters:
+        - in: path
+          name: deleteProduct
+          required: true
+          schema:
+            type: string
+          description: Opción para eliminar el producto
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID del producto a eliminar en la URL
+      responses:
+        "success":
+          description: Producto eliminado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "error":
+          description: Error del servidor, verifica la conexión
+
 components:
   schemas:
     Product:
@@ -124,7 +151,7 @@ components:
         code:
           type: string
           description: código del producto
-        thumbnail:
+        img:
           type: array
           description: imágenes asociadas del producto
         quantity:
@@ -138,13 +165,13 @@ components:
           description: Identificador autogenerado por Mongo
           format: ObjectId
       example:
-        title: Botines Nike Mercurial
-        description: Botines de futbol Nike Mercurial
-        price: 30000
-        category: Zapatillas deportivas
+        title: Remera pupera
+        description: Remera tela lanilla manga corta media estación
+        price: 7000
+        category: Remeras
         stock: 20
-        code: hlhlhlhl
+        code: mkdmklndknk
         img: url
         quantity: 1
         owner: Admin
-        _id: ObjectId("idswagger12345")
+        _id: ObjectId("objectiddemongo12345")

@@ -1,31 +1,44 @@
 const form= document.getElementById('registerForm')
 
-form.addEventListener('submit',async (e)=>{
-    e.preventDefault()
-    const data= new FormData(form)
-    const obj= {}
-    data.forEach((value, key)=>obj[key]=value)
 
-    try{
-        const response = await fetch('/api/session/register', {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers:{
-                'Content-Type':'application/json '
-            } 
-        })
-        const responseData= await response.json()
-        if(responseData.status === 'success'){
-            window.location.replace('/login')
-        }
-        if(data.status === 'error'){
-            const aletErrorRegister= document.getElementById('aletErrorRegister')
-            const msj= data.error
-            aletErrorRegister.innerText= msj 
-          }
+
+form.addEventListener('submit', async(event)=> {
+  try{
+    event.preventDefault()
+    const formData = new FormData(form);
+    const obj = {};
+    for (let [key, value] of formData) {
+      obj[key] = value;
     }
-    catch(err){
-        console.log(err)
-    }
-   
-})
+    
+    const user= JSON.stringify(obj)
+    
+
+    const response = await fetch('/api/session/register', {
+      method: 'POST',
+      body: user,
+      headers: {
+          "Content-Type": "application/json"
+      }
+    })
+   console.log('response',response)
+ 
+    const data= await response.json()
+
+        if(data.status === 'success'){
+        window.location.replace('/login')
+      }
+      if(data.status === 'error'){
+        const aletErrorRegister= document.getElementById('aletErrorRegister')
+        const msj= data.error
+        aletErrorRegister.innerText= msj 
+      }
+  
+}
+
+  catch(err){
+    console.log(err)
+  }
+});
+  
+  

@@ -1,110 +1,112 @@
-import express from "express";
-import handlebars from "express-handlebars"
+import express  from "express"; 
 import mongoose from "mongoose";
-import { Server } from  "socket.io";
-import MongoStore from "connect-mongo";
-import session from "express-session";
-import passport from "passport";
 import cookieParser from "cookie-parser";
-import swaggerJSDoc from "swagger-jsdoc";
+import handlebars from 'express-handlebars'
+import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUiExpress from "swagger-ui-express";
 
 
-import CartRouter from "./routes/carts.router.js"
-import ProductRouter from "./routes/products.router.js";
-import SessionRouter from "./routes/session.router.js";
-import UserRouter from "./routes/userView.router.js";
-import EmailRouter from "./routes/email.router.js";
-import DocumentsRouter from "./routes/documents.router.js";
-import loggerRouter from "./routes/loggerRouter/logger.router.js"
-import initializePassportStrategies from './config/passport.config.js';
-import moksRouter from "./moks/routerMoks/moks.products.router.js"
-import UserView from "./routes/viewsRouter/userView.router.js";
-import { loginAndRegisterview } from "./services/viewsServices.js";
-import {productsView} from './services/viewsServices.js'
-import {cartView} from './services/viewsServices.js'
-import {homeView} from './services/viewsServices.js'
+import passportStrategies from './config/passport.config.js'
+import UserRouter from "./routers/user.router.js";
+import SessionRouter from './routers/session.router.js'
+import ProductRouter from './routers/products.router.js'
+import CartRoute from './routers/cart.router.js'
+import moksRouter from '../src/moks/routermoks/moks.products.router.js'
+import loggerRouter from './routers/loggerRouter/logger.router.js'
+import EmailRouter from './routers/email.router.js'
+import DocumentsRouter from './routers/documents.router.js'
+import UserViewRouter from './routers/viewsRouters/user.view.router.js'
 
-import errorMiddlewares from "./middlewares/errorMiddlewares.js";
-import config from "./config.js"
-import __dirname from "./util.js";
+import {loginAndRegisterview} from './services/viewsServices/viewsServices.js'
+import {productsView} from './services/viewsServices/viewsServices.js'
+import {cartView} from './services/viewsServices/viewsServices.js'
+import {homeViewRouter} from './services/viewsServices/viewsServices.js'
+import { Server } from 'socket.io'
+import attachLogger from './middlewares/logger.middleware.js'
+import errorHandler from './middlewares/errorMiddlewares.js'
+import __dirname from "./util.js"
+import config from './config.js'
 
-
-const app = express();
-const connection = mongoose.connect("mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/modulo2?retryWrites=true&w=majority")
-const PORT = process.env.PORT || 8080; 
-const server = app.listen(PORT, ()=>{console.log(`listening on PORT ${PORT}`)});
+const app= express()
 
 
-//Server de socket
-const io = new Server(server);
+app.use(attachLogger)
+const port =config.app.PORT
+const connection = mongoose.connect("mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/EntregaFinal?retryWrites=true&w=majority")
 app.use(cookieParser())
-//Lineas del poder y del saber
-app.use(express.json());
-app.use(express.urlencoded({ extended: true}))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(express.static(`${__dirname}/public`))
-//Midleware IO
+
+const server= app.listen(port, ()=> console.log(`listening on ${port} - ${config.mode.mode}`))
+const io  = new Server(server)
 app.use((req,res,next)=>{
-  req.io= io
-  next()
+    //La intención será REFERENCIAR NUESTRO io
+    req.io = io;
+    next();
+})
+io.on('connection', socket =>{
+    console.log("Nuevo cliente conectado");
+   
 })
 
-//Handlebars
-app.engine("handlebars", handlebars.engine());
-app.set("views", `${__dirname}/views`);
-app.set("view engine", "handlebars");
 
-app.use(session({
-  store: new MongoStore({
-      mongoUrl: "mongodb+srv://ecommerceCoder:123@clustercitofeliz.3f0s7ty.mongodb.net/EntregaFinal?retryWrites=true&w=majority",
-      ttl: 20
-  }),
-  secret: 'CoderS3cret',
-  resave: false,
-  saveUninitialized: false
-}))
+//handlebars
+app.engine('handlebars',handlebars.engine());
+app.set('views',`${__dirname}/views`);
+app.set('view engine','handlebars')
 
-app.use(passport.initialize());
-initializePassportStrategies();
+passportStrategies()
 
 
+
+//Estrategia para documentación con swagger:
 const swaggerOptions={
-  definition:{
-      openapi: '3.0.1',
-      info:{
-          title: 'Tecno Tienda Gamer',
-          description: 'Tienda de componentes gamers .'
-      }
-  },
-  apis: [ `${__dirname}/./docs/**/*.yaml`]
+    definition:{
+        openapi: '3.0.1',
+        info:{
+            title: 'Tienda nube',
+            description: 'Documentación de api ecommerce, proyecto para CorderHouse'
+        }
+    },
+    apis: [ `${__dirname}/./docs/**/*.yaml`]
 }
 
 const specifications= swaggerJSDoc(swaggerOptions)
 app.use('/docs' , swaggerUiExpress.serve, swaggerUiExpress.setup(specifications))
 
 
-//Routers
-const documentsRouter = new DocumentsRouter()
+
+//rutas
+const documentsRouter= new DocumentsRouter()
 app.use('/api/documents', documentsRouter.getRouter())
 app.use('/', loggerRouter)
-const userRouter = new UserRouter()
+const userRouter= new UserRouter()
 app.use('/api/users', userRouter.getRouter())
-const cartRouter = new CartRouter()
-app.use("/api/cart",cartRouter.getRouter())
-const productsRouter= new ProductRouter()
-app.use("/api/products",productsRouter.getRouter());
 const sessionRouter= new SessionRouter()
-app.use('/api/session', sessionRouter.getRouter());
+app.use('/api/session', sessionRouter.getRouter())
+const productsRouter= new ProductRouter()
+app.use('/api/products', productsRouter.getRouter())
+const cartRouter= new CartRoute()
+app.use('/api/cart', cartRouter.getRouter())
 const emailRouter= new EmailRouter()
 app.use('/api/email', emailRouter.getRouter())
-app.use('/smokingsproducts', moksRouter)
 
-io.on('connection',socket=>{
-  registerChatHandler(io,socket);
-})
+//rutas de vistas
 app.use('/',loginAndRegisterview.getRouter())
 app.use('/products',productsView.getRouter())
 app.use('/',cartView.getRouter())
-app.use('/', homeView.getRouter())
-const userViewRouter = new UserView()
-app.use('/users', userViewRouter.getRouter())
+app.use('/', homeViewRouter.getRouter())
+const useViewRouter= new UserViewRouter()
+app.use('/users', useViewRouter.getRouter())
+app.use('/smokingsproducts', moksRouter)
+
+app.use(errorHandler)
+
+
+
+
+
+
+
+

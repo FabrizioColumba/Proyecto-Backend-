@@ -1,4 +1,5 @@
-const form = document.getElementById('loginForm')
+
+const form= document.getElementById('loginForm')
 
 form.addEventListener('submit',async (e)=>{
     e.preventDefault()
@@ -21,6 +22,17 @@ form.addEventListener('submit',async (e)=>{
             spamUserNotFound.innerText= error
             form.reset()
         }
+        if(responseData.status === 'success'){
+          
+           if(responseData.userrole === "ADMIN"){
+           window.location.replace('/adminHome')
+       
+           }
+           else{
+            window.location.replace('/home')
+           }
+        }
+    
     }
     catch(err){
         console.log(err, 'error del server en login.js')

@@ -1,19 +1,21 @@
-import UsersManager from "../dao/managers/userManager.js";
-import UserServices from "./userServices.js";
+import UserManager from "../dao/managers/userManager.js";
+import UserServices from "./userService.js";
 
-export const  userServices = new UserServices(new UsersManager);
+export const userServices= new UserServices(new UserManager)
 
-import CartManager from "../dao/managers/cartManager.js";
-import CartServices from "./cartServices.js";
+import ProductsManager from '../dao/managers/productsManager.js'
+import ProductsServices from '../services/productsService.js'
 
-export const cartServices = new CartServices(new CartManager);
+export const productsService= new ProductsServices(new ProductsManager)
 
-import ProductManager from "../dao/managers/productsManager.js";
-import ProductServices from "./productServices.js";
 
-export const productServices = new ProductServices(new ProductManager);
+import CartsManager from '../dao/managers/cartManager.js'
+import CartsService from './cartService.js'
 
-import TiketServices from '../services/ticketsServices.js'
+export const cartsService= new CartsService(new CartsManager)
+
+
+import TiketServices from '../services/tikets.service.js'
 import TiketManager from '../dao/managers/tiketManager.js'
 
-export const tiketServices = new TiketServices(new TiketManager)
+export const tiketService= new TiketServices(new TiketManager)

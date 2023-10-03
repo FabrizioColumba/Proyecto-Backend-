@@ -1,9 +1,11 @@
+
 <div class="cartCard">
-  <h3 value={{totalQuantity}}>Cantidad total de productos:  {{totalQuantity}} </h3>
-  <h3>Total: {{totalAmount}} </h3>
+    <h1 value="{{username}}" id="username" >Productos agregados al cart de {{username}}:</h1>
+  <h3 value={{totalQuantity}}>Cantidad total de productos:  {{totalQuantity}}  </h3>
+  <h3>Monto total:$  {{totalAmount}} </h3>
   {{#each listFinalDeProducts}}
         <div class="productCart"> 
-</div>           
+  
 <div class="sub-div-cart-card">
     <div> 
         <img src={{this.img}} alt={{this.description}} class="img-product-cart">
@@ -25,8 +27,10 @@
     {{/each}}
  </div>
 
-<button data-cart-id="{{cid}}" id="btnGenerarTiket">Finalizar compra</button>
-<button data-cart-id="{{cid}}" id="btnCancelarCompra">Cancelar compra</button>
+ 
+  <button data-cart-id="{{cid}}" id="btnGenerarTiket">Finalizar compra</button>
+  
+  <button data-cart-id="{{cid}}" id="btnCancelarCompra">Cancelar compra</button>
 
-<script src="../public/js/cart.js"></script>
-<script src="../public/js/ticket.js"></script>      
+<script src="/js/cart.js"></script>
+<script src="/js/tiket.js"></script>      

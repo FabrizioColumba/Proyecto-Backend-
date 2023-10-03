@@ -1,14 +1,16 @@
-import ticketModel from "../models/ticketModel.js"
+import tiketModel from '../models/tiketModel.js'
 export default class TiketManager{
 
-    getTiket=(tid)=>{
-        return ticketModel.findById(tid)
-    }
-    createTiket=(tiket)=>{
-        return ticketModel.create(tiket)
-    }
-    deleteTiket=(tid)=>{
-        return ticketModel.findByIdAndDelete(tid)
+
+    getTiket=(params,data)=>{
+        return tiketModel.findOne({[params]: data})
     }
 
+    createTiket=(tiket)=>{
+        return tiketModel.create(tiket)
+    }
+    deleteTiket=(tid)=>{
+        return tiketModel.findByIdAndDelete(tid)
+    }
+   
 }

@@ -1,10 +1,9 @@
-import { Router } from "express";
-import { generateMoksProducts } from "../productsMoks/products.moks.js";
-
-
-const router = Router();
+import {Router} from 'express'
+import {generateMoksProducts} from '../productsMoksFn/products.moks.fn.js'
+const router= Router()
 
 router.get('/', async (req,res)=>{
+  
     try{
         const arrayProductsMoks= []
         for(let i=0; i<50; i++){
@@ -18,11 +17,13 @@ router.get('/', async (req,res)=>{
     }
 })
 
-router.get('/moks', async (req,res)=>{
+
+
+router.get('/1', async (req,res)=>{
   
     try{
  
-     const product = generateMoksProducts()
+     const product= generateMoksProducts()
      console.log(product)
         res.send({status:'success', payload:product})
     }

@@ -8,7 +8,11 @@
     align-items: center;
     text-align: center;
     padding: 60px;   
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20230307/pngtree-modern-background-with-abstract-shape-and-electric-circuit-vector-image_1815557.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
 .formNewProduct * {
     width: 90%;
     padding: 5px;
@@ -17,7 +21,6 @@
     font-size:large;
  
 }
-
 .btnNewProduct:hover{
-    background-color:  rgba(68, 4, 243, 0.403);
+    background-color:  rgba(252, 241, 241, 0.403);
 }

@@ -1,0 +1,6 @@
+paths:
+  /api/users:
+    get:
+      summary: Devuelve los usuarios registrados hasta el momento
+      tags:
+        - Users

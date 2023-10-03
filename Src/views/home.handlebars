@@ -1,0 +1,78 @@
+
+<nav class="navContainer">
+    <ul class="nav-ul">
+        <li><a href="/home" class="nav-item">HOME</a></li>
+        <li><a href="/products/?category=remeras" class="nav-item">Remeras</a></li>
+        <li><a href="/products/?category=pantalones" class="nav-item">Pantalones</a></li>
+        <li><a href="/products/?category=abrigos" class="nav-item" >Abrigos</a></li>
+        <li><a href="/products/?category=accesorios" class="nav-item" >Accesorios</a></li>
+     
+        <li>
+         <a href="/cart" class="nav-item" >        
+           <span class="material-symbols-outlined">
+            shopping_cart
+            </span>  
+            <samp id="spamCart" style="color: antiquewhite;"></samp>
+         </a>
+        </li>
+        {{#if isUser}}
+        <li><a href="/users/users" class="nav-item" >Ver Usuarios</a></li>
+           <li><a href="/profileuser" style="color: white;"  class="nav-item">Mi perfil
+           <span>  <img src={{imgProfile}} alt="Imagen de perfil de usuario" class="imgProfileSpam"></span>
+           </a>
+        </li>
+       
+          <li><a href="/users/premiumDocumentsForm" style="color: white;"  class="nav-item">Convertirme a premium</a> </li>         
+        {{/if}}
+
+        {{#if isPremium}}
+        <li><a href="/users/users" class="nav-item" >Ver Usuarios</a></li>
+          <li><a href="/profilepremium"   class="nav-item">Mi perfil</a></li>
+          <li><button id="btnRevertPremium" data-user-id="{{userId}}" >DEJAR DE SER USUARIO PREMIUM</button></li>  
+        {{/if}}
+    
+        <li id="btnCerrarSession"  class="nav-item" >Cerrar sesion</li>
+    </ul>
+
+</nav>
+
+
+<div class="productsContainer">
+    {{#each products}}
+    <div class="productCard">
+        <img src={{this.img}} alt={{this.description}}>
+        <p>Description: {{this.description}} </p>
+         <p>Color:{{this.color}} </p>
+        <p>Talle: {{this.talle}}</p>
+        <p>Price: $ {{this.price}} </p>
+         <p>Dueño:{{this.owner}} </p>  
+        <button id="btn-subtract-product" class="btn-subtract-product">-</button>
+        <span id="spam-quantity" class="spam-quantity">1</span>
+        <button id="btn-add-more-product" class="btn-add-more-product"  data-stock="{{this.stock}}">+</button>
+        <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
+    </div>
+    {{/each}}
+</div>
+
+
+    {{#if hasPrevPage}}
+    <div class="btnsContainer"></div>
+    <a href="/products/?page={{prevPage}}"><button> < Anterior</button> </a>
+    {{/if}}
+
+    <div class="numberPage">
+   {{page}}
+    </div>
+  
+
+    {{#if hasNextPage}}
+    <a href="/products/?page={{nextPage}}"><button>Próxima > </button> </a>
+    </div>
+    {{/if}}
+
+
+
+ <script src="/js/home.js"></script> 
+
+  <script src="/socket.io/socket.io.js"></script>
+<script src="/js/pruebasoketCart.js"></script>

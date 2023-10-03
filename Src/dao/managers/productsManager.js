@@ -1,25 +1,31 @@
-import productModel from "../models/productsModel.js";
+import productsModel from '../models/productsModel.js';
 
-export default class ProductManager {
-    getProduct = () => {
-        return productModel.find().lean();
+export default class ProductsManager{
+    getProducts= ()=>{
+        return productsModel.find().lean()
     }
-    getProductsTo = (param1,param2)=>{
-        return productModel.find({[param1]:param2}).lean()
+    getListProductsToId=(productsIds)=>{
+        return productsModel.find({ _id: { $in: productsIds } })
     }
-    getProductBy = (params) =>{
-        return productModel.findOne(params).lean().populate("products.product");
+    getProductById=(pid)=>{
+        return productsModel.findById(pid)
     }
-    createProduct = (product) =>{
-        return productModel.create(product);
+    getProductsTo= (param1,param2)=>{
+        return productsModel.find({[param1]:param2}).lean()
     }
+    getProductBy=(param1,param2)=>{
+        return productsModel.findOne({[param1]:param2}).lean()
+    }
+
+    createProduct=(product)=>{
+        return productsModel.create(product)
+    }
+
     createProducts=(products)=>{
-        return productModel.insertMany(products)
+        return productsModel.insertMany(products)
     }
-    updateProduct = (id, product) =>{
-        return productModel.findByIdAndUpdate(id, { $set: product});
-    }
-    deleteProduct = (id) =>{
-        return productModel.findByIdAndDelete(id);
+  
+    deleteProduct=(pid)=>{
+        return productsModel.findByIdAndDelete(pid)
     }
 }

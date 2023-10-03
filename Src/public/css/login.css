@@ -1,3 +1,4 @@
+
 .login-container{
     display: flex;
     flex-direction: column;
@@ -5,6 +6,9 @@
     align-items: center;
     padding: 60px;   
     margin: 30px;
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20230307/pngtree-modern-background-with-abstract-shape-and-electric-circuit-vector-image_1815557.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .form-clsss{
@@ -13,7 +17,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color:  rgba(17, 5, 255, 0.403);
+    background-color:  rgba(252, 241, 241, 0.403);
     padding: 20px;
  
 }
@@ -27,14 +31,14 @@
     text-decoration: none;
 }
 .link-style:hover{
-    background-color:  rgba(131, 169, 167, 0.403);
+    background-color:  rgba(252, 241, 241, 0.403);
    border-radius: 6px;
 }
 
 .spamUserNotFound{
     color: red;
     font-size: larger;
-    background-color:  rgba(0, 252, 63, 0.745);
+    background-color:  rgba(239, 235, 235, 0.745);
     padding: 3px;
     margin: 3px;
 }

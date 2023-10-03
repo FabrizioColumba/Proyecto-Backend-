@@ -1,7 +1,7 @@
 paths:
   /api/cart:
     get:
-      summary: Devuelve el carrito de compras del usuario.
+      summary: Devuelve el carrito de compras del usuario, ya sea premium o normal.
       tags:
         - Cart
       responses:
@@ -57,6 +57,28 @@ paths:
                 $ref: "#/components/schemas/Cart"
         "error":
           description: Error al generar tiket, puede que haya quedado un tiket anterior vigente
+  /api/cart/{clearCart}:
+    post:
+      summary: Vacia el carrito de productos.
+      tags:
+        - Cart
+      parameters:
+        - in: path
+          name: clearCart
+          required: true
+          schema:
+            type: string
+          description: limpiar carrito (clearCart)
+      responses:
+        "success":
+          description: Carrito de compras limpiado/vaciado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "error":
+          description: Error del sevidor, corroborar conexión
+
 components:
   schemas:
     Cart:
@@ -79,4 +101,4 @@ components:
         products: []
         totalAmount: 14141
         totalQuantity: 2
-        _id: ObjectId("idswagger12345")
+        _id: ObjectId("objectiddemongo12345")

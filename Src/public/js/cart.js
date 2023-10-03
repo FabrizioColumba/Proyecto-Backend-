@@ -1,4 +1,5 @@
-console.log('conectado al js')
+
+console.log('conectado al primer js')
 
 const btnDeleteProductCart= document.querySelectorAll('.delete-product-btn')
 
@@ -21,7 +22,6 @@ btnDeleteProductCart.forEach(btn => {
         .then((response)=>{
             response.json()
             window.location.replace('/cart')
-            console.log('El btn borrar product funcionia de manera correcta', response)
         }
         )
         .catch(error => {
@@ -32,6 +32,8 @@ btnDeleteProductCart.forEach(btn => {
 
     })
 });
+
+
 const btnCancelarCompra=document.getElementById('btnCancelarCompra')
 btnCancelarCompra.addEventListener('click', ()=>{
    try{
@@ -56,3 +58,4 @@ btnCancelarCompra.addEventListener('click', ()=>{
    }
 })
 
+// /api/cart/deleteproductcart

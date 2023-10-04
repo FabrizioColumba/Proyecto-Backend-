@@ -59,7 +59,7 @@ const passportStrategies=()=>{
         new LocalStrategy(
           { usernameField: 'email' },
           async (email, password, done) => {
-            if ((email === admin2) && password === adminPassword) {
+            if ((email === adminEmail) && password === adminPassword) {
               const userAdmin =await userServices.getUser("email", email)
               const user = {
                 id: userAdmin._id,
@@ -94,6 +94,8 @@ const passportStrategies=()=>{
           }
         )
       );
+    
+
       passport.use('jwt', new Strategy({
         jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor]),
         secretOrKey:'jwtSecret'

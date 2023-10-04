@@ -21,8 +21,7 @@ export default {
         mode: process.env.MODE
     },
     admin:{
-        emailemail1: process.env.ADMIN_1_EMAIL,
-        emailemail2: process.env.ADMIN_2_EMAIL,
+        adminEmail:process.env.ADMIN_EMAIL,
         adminPassword: process.env.ADMIN_PASSWORD
 
     }

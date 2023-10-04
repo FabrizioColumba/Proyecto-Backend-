@@ -39,28 +39,24 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(`${__dirname}/public`))
 
 const server= app.listen(port, ()=> console.log(`listening on ${port} - ${config.mode.mode}`))
-const io  = new Server(server)
-app.use((req,res,next)=>{
-    //La intención será REFERENCIAR NUESTRO io
-    req.io = io;
-    next();
-})
-io.on('connection', socket =>{
-    console.log("Nuevo cliente conectado");
+// const io  = new Server(server)
+// app.use((req,res,next)=>{
+//     req.io = io;
+//     next();
+// })
+// io.on('connection', socket =>{
+//     console.log("Nuevo cliente conectado");
    
-})
+// })
 
 
 //handlebars
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views`);
 app.set('view engine','handlebars')
-
 passportStrategies()
 
 
-
-//Estrategia para documentación con swagger:
 const swaggerOptions={
     definition:{
         openapi: '3.0.1',

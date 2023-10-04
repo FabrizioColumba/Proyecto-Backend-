@@ -53,25 +53,11 @@ export default class HomeViewRouter extends RouterPadre{
             })
         })
 
-
-
-        this.get('/adminHome', ["ADMIN"], async (req,res)=>{
-            const products= await productsService.getProducts()
-            const owners= products.map(p=> p.owner)
-            //console.log(owners)
-            res.render('adminhome',{
-                css:'home',
-                products,
-               
-            })
-         
-        })
-
         this.get('/', ["PUBLIC"], async (req,res)=>{
             res.render('inicio')
         })
 
 
 
-    }//cierre del init
+    }
 }

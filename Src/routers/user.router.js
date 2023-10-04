@@ -6,15 +6,14 @@ import {imgProfileUploader} from '../middlewares/multer.middleware.js'
 
 export default class UserRouter extends RouterPadre{
     init(){
-
         this.get('/', ["PUBLIC", "USER", "ADMIN","PREMIUM"],usersControllers.getAllUsers)
-
-        this.put('/', ["USER","PREMIUM","ADMIN"], usersControllers.putUser)
-        this.delete('/:uid',["USER","PREMIUM","ADMIN"],usersControllers.deleteUser )
-        this.post('/user', ["PUBLIC"], usersControllers.getUser)
         
-        this.post('/postPremiumDocuments', ["USER","ADMIN","PREMIUM"],documentsUploader,usersControllers.postPremiumDocuments)
-        this.post('/postImgProfile', ["USER","ADMIN","PREMIUM"],imgProfileUploader,usersControllers.postImgProfile)
+        this.put('/', ["USER","PREMIUM","ADMIN"], usersControllers.putUser)
+        
+        this.delete('/:uid',["USER","PREMIUM","ADMIN"],usersControllers.deleteUser )
+        
+        this.post('/user', ["PUBLIC"], usersControllers.getUser)
+       
         this.post('/deleteInactiveUser', ["PUBLIC"], usersControllers.deleteInactiveUser)
-    }//cierre del init
-}//cierre de la clase
+    }
+}

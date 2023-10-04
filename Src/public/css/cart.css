@@ -1,7 +1,6 @@
 .productCart img{
     width: 170px;
 }
-
 .productCart{
     display: flex;
     flex-direction: row;

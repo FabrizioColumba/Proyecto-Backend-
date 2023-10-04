@@ -6,17 +6,14 @@ const mailingService= new MailingService()
 
 export default class EmailRouter extends RouterPadre{
     init(){
-
             this.get('/',['PUBLIC'], async (req,res)=>{
                 try{
-                const result= await mailingService.sendMail('mtgprimaria@gmail.com', Dtemplates.RESTORE_PASSW,{msj:'Hola,funciona'})
-
+                const result= await mailingService.sendMail('fabricolumba@gmail.com', Dtemplates.RESTORE_PASSW,{msj:'Hola,funciona'})
                 res.send({status:"success",payload:result})
                 }
                 catch(error){
                     console.log(error)
                 }
             })
-
-    }//cierre init
+    }
 }

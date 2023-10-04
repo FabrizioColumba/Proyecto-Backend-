@@ -1,4 +1,3 @@
-
 import { tiketService ,cartsService} from "../services/services.js";
 import MailingService from '../mailService/mail.service.js'
 import Dtemplates from '../constants/Dtemplates.js'
@@ -25,8 +24,6 @@ const operacionTiket=async(req,res)=>{
       description: p.product.description,
       price: p.product.price,
       category: p.product.category,
-      talle: p.product.talle,
-      color:p.product.color,
       amount: p.amount,
       quantity: p.quantity,
       owner: p.product.owner

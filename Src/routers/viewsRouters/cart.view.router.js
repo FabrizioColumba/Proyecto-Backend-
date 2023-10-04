@@ -6,17 +6,11 @@ import {generateTiketsData} from '../../middlewares/tiket.middleware.js'
 
 export default class CartView extends RouterPadre{
     init(){
-      
-
         this.get('/cart', ["USER", "PREMIUM"], async (req,res)=>{
-          // console.log(`el dueño de este carrito es ${req.user.name}`)
           const username= req.user.name
           const cart= req.user.cart 
-         
           const cid= cart[0]._id
-          //const clear= await cartsService.clearCart(cid)
-         const cartDb= await cartsService.getCartById(cid)
-        // console.log(cartDb.products)
+          const cartDb= await cartsService.getCartById(cid)
         let listFinalDeProducts=[]
         const integro= cartDb.products.map(p=>{
           const obj={
@@ -25,16 +19,12 @@ export default class CartView extends RouterPadre{
             price: p.product.price,
             img: p.product.img,
             category: p.product.category,
-            talle: p.product.talle,
-            color:p.product.color,
             amount: p.amount,
             quantity: p.quantity
           }
 
          listFinalDeProducts.push(obj)
         })
-
-         
           res.render('cart',{
             cid:cid,
             listFinalDeProducts:listFinalDeProducts,
@@ -43,11 +33,6 @@ export default class CartView extends RouterPadre{
             username:username
           })
        })
-
-
-
-
-
 
         this.get('/:cid/purchase', ["ADMIN",'USER',"PREMIUM"], generateTiketsData, async (req, res) => {
             const email= req.user.email
@@ -70,6 +55,6 @@ export default class CartView extends RouterPadre{
               res.render('pruebasoket')
              })
 
-    }//cierre del init
+    }
 }
 

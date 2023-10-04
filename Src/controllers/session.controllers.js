@@ -6,8 +6,8 @@ import Dtemplates from '../constants/Dtemplates.js'
 import jwt from 'jsonwebtoken'
 import {validatePassword, createHash} from "../util.js"
 
-const registerUser=async (req,res)=>{
-    try{   
+const registerUser = async (req,res)=>{
+    try{
       const userEmail= req.user.email
       const username= req.user.first_name
       const mailingService= new MailingService()
@@ -21,7 +21,6 @@ const registerUser=async (req,res)=>{
 
 }
 
-
 const loginUser=async (req,res)=>{
     try{
       if(req.error === 'Correo no encontrado' || req.error === 'Contraseña inválida'){
@@ -32,12 +31,12 @@ const loginUser=async (req,res)=>{
         const role= req.user.role
         const uid= req.user.id
           const accessToken = generateToken(req.user);
-          const connectionDate= new Date()
+          const connectionDate = new Date()
           const expirationDate = new Date(connectionDate)
           expirationDate.setDate(connectionDate.getDate() +30 )
         
-          const user= await userServices.updateUserLastConection(uid,connectionDate)
-          const exp= await userServices.updateUserExpiration(uid,expirationDate)
+          const user = await userServices.updateUserLastConection(uid,connectionDate)
+          const exp = await userServices.updateUserExpiration(uid,expirationDate)
   
           res.cookie('authToken',accessToken, {
               maxAge:1000*60*60*24,
@@ -51,7 +50,7 @@ const loginUser=async (req,res)=>{
     }
 }
 
-  const loginWidthGitHub=(req,res)=>{
+  const loginWidthGitHub = (req,res)=>{
     try{
         const accessToken = generateToken(req.user);
         res.cookie('authToken',accessToken, {
@@ -65,13 +64,13 @@ const loginUser=async (req,res)=>{
     }
   }          
 
-const restoreRequest=async(req,res)=>{
-  const {email}= req.body
-  const user= await userServices.getUser("email", email)
+const restoreRequest = async(req,res)=>{
+  const {email} = req.body
+  const user = await userServices.getUser("email", email)
   if(user){
-   const restoreToken= generateToken(RestoreTokenDTO.getFrom(user),'1h')
-   const mailingService= new MailingService()
-    const result= await mailingService.sendMail(user.email, Dtemplates.RESTORE_PASSW,{restoreToken})
+   const restoreToken = generateToken(RestoreTokenDTO.getFrom(user),'1h')
+   const mailingService = new MailingService()
+    const result = await mailingService.sendMail(user.email, Dtemplates.RESTORE_PASSW,{restoreToken})
    res.clearCookie('authToken').send({status:"success"})
   
   }
@@ -80,20 +79,16 @@ const restoreRequest=async(req,res)=>{
   }
 }
 
-
 const newPswRestore=async(req,res)=>{
-
  try{
   const{password, token}=req.body
- 
-  const userToken= jwt.verify(token,'jwtSecret')
-  
-  const user= await userServices.getUser("email",userToken.email)
-  const comparePassword= await validatePassword(password, user.password)
+  const userToken = jwt.verify(token,'jwtSecret')
+  const user = await userServices.getUser("email",userToken.email)
+  const comparePassword = await validatePassword(password, user.password)
   if(comparePassword){
     res.send({status:'error', error: 'misma contraseña'})
   }
-const hashPassword= await createHash(password)
+const hashPassword = await createHash(password)
   await userServices.updateUser(user._id, {password:hashPassword })
   res.send({status:'success', message:'Contraseña modificada'})
  }
@@ -104,9 +99,7 @@ catch(error){
 
 const cerrarsession=async(req,res)=>{
  try{
-  //console.log(req.user)
   res.clearCookie('authToken').send({status:"success"})
-
  }
  catch(error){
   console.log(error)

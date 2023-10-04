@@ -57,5 +57,3 @@ btnCancelarCompra.addEventListener('click', ()=>{
     console.log(error)
    }
 })
-
-// /api/cart/deleteproductcart

@@ -16,11 +16,8 @@ export default class ProductsView extends RouterPadre{
             const isPremium=  role === "PREMIUM"
             const isUser= role === "USER"
            
-        
             if(category){
                 const productsfilter= await productsService.getProductsTo("category",category)
-               // console.log('ownerproductsfilter', productsfilter.owner)
-              
                 res.render('products',{
                     productsfilter,
                     hasPrevPage: false,
@@ -43,7 +40,6 @@ export default class ProductsView extends RouterPadre{
             const hasPrevPage = currentPage > 1;
             const prevPage = hasPrevPage ? currentPage - 1 : null;
             const nextPage = hasNextPage ? currentPage + 1 : null;
-          //console.log('products owner', products.owner)
         res.render('products', 
         {products,
          page:currentPage, 
@@ -56,7 +52,6 @@ export default class ProductsView extends RouterPadre{
          isPremium:isPremium,
          isUser:isUser,
          css:'products'
-         //cid: cid
          })
     }
         })
@@ -75,8 +70,6 @@ export default class ProductsView extends RouterPadre{
                 price:productDb.price,
                 category: productDb.category,
                 stock: productDb.stock,
-                talle:productDb.talle,
-                color:productDb.color,
                 img:productDb.img,
                 id: productDb._id
 
@@ -125,6 +118,6 @@ export default class ProductsView extends RouterPadre{
             })
         })
 
-    }//cierre init
+    }
 
 }

@@ -44,6 +44,6 @@ export default class UserViewRouter extends RouterPadre{
             })
         })
 
-    }//cierre init
+    }
 
 }

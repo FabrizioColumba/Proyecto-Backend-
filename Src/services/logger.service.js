@@ -35,7 +35,6 @@ export default class LoggerServices{
                         levels:this.options.levels,
                         transports:[
                             new winston.transports.Console({level:"info", format:winston.format.simple()}),
-                           // new winston.transports.File({level:"error",filename: '../errors.log'})
                         ]
                        })
 

@@ -3,7 +3,6 @@ import config from "../config.js";
 import DMailInfo from '../constants/DMailInfo.js'
 import {generateMailTemplate} from '../util.js'
 
-
 export default class MailingService{
     constructor(){
         this.mailer = nodemailer.createTransport({
@@ -20,7 +19,7 @@ export default class MailingService{
         const mailInfo = DMailInfo[template];
         const html = await generateMailTemplate(template,payload);
         const result = await this.mailer.sendMail({
-            from: 'Fabri <fabricolumba@gmail.com>',
+            from: 'Fabri <fabriziocolumba@gmail.com>',
             to: emails,
             html,
             ...mailInfo

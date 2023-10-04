@@ -8,17 +8,16 @@ import {validatePassword, createHash} from "../util.js"
 
 const registerUser = async (req,res)=>{
     try{
-      const userEmail= req.user.email
-      const username= req.user.first_name
-      const mailingService= new MailingService()
-      const result= await mailingService.sendMail(userEmail, Dtemplates.WELCOME_REGISTERED,username)
-        res.send({status:'success', payload:req.user})  
-       
+      console.log("hello")
+      const userEmail = req.user.email
+      const username = req.user.first_name
+      //const mailingService = new MailingService()
+      //const result = await mailingService.sendMail(userEmail, Dtemplates.WELCOME_REGISTERED,username)
+        res.send({status:'success', payload:req.user})
        }
        catch(error){
         console.log('Error catch register:', error)
        }
-
 }
 
 const loginUser=async (req,res)=>{

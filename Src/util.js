@@ -4,9 +4,6 @@ const __filename= fileURLToPath(import.meta.url)
 const __dirname= dirname(__filename)
 export default __dirname
 
-
-
-
 import bcrypt from 'bcrypt';
 
 export const createHash = async(password) => {
@@ -30,7 +27,6 @@ export const passportCall = (strategy,options={}) =>{
     return async(req,res,next) =>{
         passport.authenticate(strategy,(error,user,info)=>{
             if(error)return next(error);
-           
             if(!options.strategyType){
                 console.log(`Route ${req.url} no se definió la strategyType`);
                 return res.sendServerError();
@@ -44,8 +40,7 @@ export const passportCall = (strategy,options={}) =>{
                         return next();
                     case 'locals':
                        req.error= info.message?info.message:info.toString;
-                       return next();
-                     
+                       return next(); 
                 }
             }
             req.user = user;

@@ -2,8 +2,7 @@
 const btnGenerarTiket= document.getElementById('btnGenerarTiket')
 
 btnGenerarTiket.addEventListener('click', ()=>{
-  try{
-          
+  try{   
     const cartId = btnGenerarTiket.getAttribute('data-cart-id')
 
        fetch(`/api/cart/${cartId}/purchase`,{
@@ -21,7 +20,6 @@ btnGenerarTiket.addEventListener('click', ()=>{
       }
     }
     if(data.status=== "success"){
-      //window.location.replace(`/${cartId}/purchase`)
       const payload= data.payload
       const userConfirmed = window.confirm(
         `Compra realizada. 
@@ -43,13 +41,9 @@ btnGenerarTiket.addEventListener('click', ()=>{
           window.location.replace('/home')
         }
       })
-
       }
-     
-    }
-   
-   })  
-   
+    } 
+   })   
   }
   catch(error){
     console.log(error)

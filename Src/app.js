@@ -39,15 +39,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(`${__dirname}/public`))
 
 const server= app.listen(port, ()=> console.log(`listening on ${port} - ${config.mode.mode}`))
-// const io  = new Server(server)
-// app.use((req,res,next)=>{
-//     req.io = io;
-//     next();
-// })
-// io.on('connection', socket =>{
-//     console.log("Nuevo cliente conectado");
-   
-// })
+
 
 
 //handlebars

@@ -2,6 +2,7 @@ import {userServices} from '../services/services.js'
 import RouterPadre from './router.js'
 import { passportCall} from "../util.js"
 import sessionControllers from '../controllers/session.controllers.js'
+import ProductsManager from '../dao/managers/productsManager.js'
 
 export default class SessionRouter extends RouterPadre{
 

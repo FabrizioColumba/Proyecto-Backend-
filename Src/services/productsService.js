@@ -1,5 +1,3 @@
-import ProductsManager from '../dao/managers/productsManager.js'
-
 export default class ProductsServices{
     constructor(dao){
         this.dao= dao
@@ -8,9 +6,6 @@ export default class ProductsServices{
     getProducts= ()=>{
         return this.dao.getProducts()
     }
-
-   
-
 
     getProductById=(pid)=>{
         return this.dao.getProductById(pid)
@@ -31,10 +26,6 @@ export default class ProductsServices{
 
     createProduct=(product)=>{
         return this.dao.createProduct(product)
-    }
-
-    createProducts=(products)=>{
-        return this.dao.createProducts(products)
     }
 
     updateProduct=(pid, product)=>{

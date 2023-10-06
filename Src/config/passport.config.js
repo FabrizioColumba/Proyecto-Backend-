@@ -59,13 +59,13 @@ const passportStrategies=()=>{
         new LocalStrategy(
           { usernameField: 'email' },
           async (email, password, done) => {
-            if ((email === adminEmail) && password === adminPassword) {
-              const userAdmin =await userServices.getUser("email", email)
+            if ((email === "admin2@correo") && password === "12345") {
+              const userAdmin = await userServices.getUser("email", email)
               const user = {
                 id: userAdmin._id,
                 name: `Admin`,
                 role: 'ADMIN',
-                email: 'admin2@correo',
+                email: '...',
                 alias: "admin"
                 
               };

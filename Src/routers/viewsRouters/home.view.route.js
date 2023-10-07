@@ -4,7 +4,7 @@ import {productsService, userServices,cartsService} from '../../services/service
 
 export default class HomeViewRouter extends RouterPadre{
     init(){
-        this.get('/home', ["USER","ADMIN","PREMIUM"], async (req,res)=>{
+        this.get('/home', ["PUBLIC","USER","ADMIN","PREMIUM"], async (req,res)=>{
             try{
                 const AllProducts = await productsService.getProducts()
                 res.render('home', {

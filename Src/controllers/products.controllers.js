@@ -145,16 +145,14 @@ const deleteProduct=async(req,res)=>{
 
 const putProduct=async(req,res)=>{
     try{
-      const pid= req.body.productId
-      const productDb=await productsService.getProductById(pid)
+      const pid = req.body.productId
+      const productDb = await productsService.getProductById(pid)
       const updatedProduct = {
         title: req.body.title || productDb.title,
         description: req.body.description || productDb.description,
         price: req.body.price || productDb.price,
         category: req.body.category || productDb.category,
         code: req.body.code || productDb.code,
-        talle: req.body.talle || productDb.talle,
-        color: req.body.color || productDb.color,
         stock: req.body.stock || productDb.stock,
         img:productDb.img
     }

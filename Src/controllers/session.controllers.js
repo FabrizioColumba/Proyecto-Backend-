@@ -11,8 +11,7 @@ const registerUser = async (req,res)=>{
       console.log("hello")
       const userEmail = req.user.email
       const username = req.user.first_name
-      //const mailingService = new MailingService()
-      //const result = await mailingService.sendMail(userEmail, Dtemplates.WELCOME_REGISTERED,username)
+
         res.send({status:'success', payload:req.user})
        }
        catch(error){

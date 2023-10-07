@@ -35,6 +35,9 @@ export default class RouterPadre{
         res.sendError= (error)=>{
             res.status(500).send({status:'error', error})
         }
+        res.sendInternalError = error => res.status(500).send({ status: "error", error: error.toString() });
+        
+        res.sendIncompleteValues = error => res.status(400).send({ status: "error", message: "The fields are all required", error: error });
         next()
     }
 

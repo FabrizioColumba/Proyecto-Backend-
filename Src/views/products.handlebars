@@ -9,75 +9,39 @@
     </ul>
 </nav>
 
-<div class="bodyContainer">
-<div class="productsContainer">
-    {{#each products}}
-  <div class="productCard">
-        <img src={{this.img}} alt={{this.description}}>
-        <p>Description: {{this.description}}</p>
-        <p>Duaeño:{{this.owner}}</p>
-        <p>Price: $ {{this.price}}</p>
-        {{#if ../isUserOrPremium}}
-        <button id="btn-subtract-product" class="btn-subtract-product">-</button>
-        <span id="spam-quantity" class="spam-quantity">1</span>
-        <button id="btn-add-more-product" class="btn-add-more-product"  data-stock="{{this.stock}}">+</button>
-        <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
-        {{/if}}
-        <button class="btnDeleteProduct btnUpdateAndDelete"  data-product-id="{{this._id}}" >
-         <span class="material-symbols-outlined">
-        delete_sweep
+<h1 class="h1">Products</h1>
+
+{{#each products}}
+    <div class="product" style="display: inline-block"></li>
+    <div class="product--card">
+      <a class="product--image" href="#" title="View">
+        <img class="img-responsive" src="{{this.thumbnails}}">
+        <span class="tags">  
         </span>
-        Eliminar producto</button>
-        {{/if}}
-    </div>
-    {{/each}}
-</div>
-    {{#if hasPrevPage}}
-    <div class="btnsContainer"></div>
-    <a href="/products/?page={{prevPage}}"><button> < Anterior</button> </a>
-    {{/if}}
+      </a>
 
-    <div class="numberPage">
-   {{page}}
-    </div>
-  
+      <a class="product--title" href="#" title="View">{{this.title}}</a>
 
-    {{#if hasNextPage}}
-    <a href="/products/?page={{nextPage}}"><button>Próxima > </button> </a>
-    </div>
-    {{/if}}
+      <div class="product--brand">
+        <a href="#" title="View">{{this.description}}</a>
+      </div>
+        <span class="product--price">Category: {{this.category}}</span>
+        <span class="product--stock">Stock<b> {{this.stock}}</b></span>
+      <p>
+        <span class="propiedades" style="padding: 5px;">ID: {{this._id}}</span>
+        <span class="propiedades" style="padding: 5px;">Code: {{this.code}}</span>
+        <span class="propiedades">Status: {{this.status}}</span>
+      </p>
 
-
-{{#if productsfilter}}
-<div class="productsContainer"> 
-{{#each productsfilter}}
-  <div class="productCard">
-        <img src={{this.img}} alt={{this.description}}>
-        <p>Description: {{this.description}} </p>
-         <p>Color:{{this.color}} </p>
-        <p>Talle: {{this.talle}}</p>
-        <p>Price: $ {{this.price}} </p>
-        <p>Dueño:{{this.owner}} </p>
-       
-        {{#if ../isUserOrPremium}}
-        <button id="btn-subtract-product" class="btn-subtract-product">-</button>
-        <span id="spam-quantity" class="spam-quantity">1</span>
-        <button id="btn-add-more-product" class="btn-add-more-product"  data-stock="{{this.stock}}">+</button>
-        <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
-        {{/if}}
-       
-
-        <button class="btnDeleteProduc btnUpdateAndDelete"  data-product-id="{{this._id}}" >
-        <span class="material-symbols-outlined">
-        delete_sweep
+      <a class="product--price" href="#" title="View">
+        <span class="product--price-inner">
+                <div class="price--sell-price">${{this.price}}</div>
+    
         </span>
-        Eliminar producto</button>
-        {{/if}}
+      </a>
+          <button class="addCart" data-product-id="{{this._id}}">Add to Cart</button>
     </div>
+
+  </div>
 {{/each}}
-</div>
-{{/if}}
-
-</div>
-
- <script src="/js/products.js"></script> 
+<script src="/js/products.js"></script> 

@@ -90,23 +90,6 @@ html, body {
     font-size: 17px;
     padding: 5px
   }
-  .product .price--sell-price, .product .price--discount-price {
-    font-size: 2rem;
-  }
-  .price--sell-price {
-    color: #28a528;
-  }
-  .product .product--price .was-price, .product .product--price .price--rrp {
-    font-size: 1rem;
-  }
-  .price--sell-price.was-price, .price--rrp {
-    color: #777;
-    font-weight: 100;
-    text-decoration: line-through;
-  }
-  .price--discount-price {
-    color: #0074d9;
-  }
   .tags {
     display: block;
     position: absolute;

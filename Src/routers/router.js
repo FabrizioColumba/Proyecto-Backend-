@@ -45,7 +45,6 @@ export default class RouterPadre{
         return (req,res,next) => {
             if(policies[0]==="PUBLIC") return next();
             const user = req.user;
-            console.log(user)
             if(policies[0]==="NO_AUTH" && user) return res.status(401).send({status:"error",error:"Unauthorized"});
             if(policies[0]==="NO_AUTH" && !user) return next();
             if(!user) return res.status(401).send({status:"error",error:req.error});

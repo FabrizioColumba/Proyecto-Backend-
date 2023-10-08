@@ -1,10 +1,7 @@
 <nav class="navContainer">
     <ul class="nav-ul">
-        <li><a href="/" class="nav-item">Inicio</a></li>
-        <li><a href="/products/?category=placas" class="nav-item">Placas de video</a></li>
-        <li><a href="/products/?category=procesadores" class="nav-item">Procesadores</a></li>
-        <li><a href="/products/?category=ram" class="nav-item" >Rams</a></li>
-       
+        <li><a href="/home" class="nav-item">Inicio</a></li>
+        <li><a href="/products" class="nav-item">Products</a></li>
         <li>
          <a href="/cart" class="nav-item" >        
            <span class="material-symbols-outlined">
@@ -13,43 +10,11 @@
             <samp id="spamCart" style="color: antiquewhite;"></samp>
          </a>
         </li>
-        <li id="btnCerrarSession"  class="nav-item" >Cerrar sesion</li>
+        <li id="btnCerrarSession"><a href="/" class="nav-item">Cerrar sesion</a></li>
     </ul>
-
 </nav>
-
-
-<div class="productsContainer">
-    {{#each products}}
-    <div class="productCard">
-        <img src={{this.img}} alt={{this.description}}>
-        <p>Description: {{this.description}} </p>
-        <p>Price: $ {{this.price}} </p> 
-        <button id="btn-subtract-product" class="btn-subtract-product">-</button>
-        <span id="spam-quantity" class="spam-quantity">1</span>
-        <button id="btn-add-more-product" class="btn-add-more-product"  data-stock="{{this.stock}}">+</button>
-        <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
-    </div>
-    {{/each}}
+<div>
+    <div class="containerHomeImg">
+    <img src="https://smarts.com.ar/wp-content/uploads/2023/09/WEB-BANNER-SMARTS-1920X640.webp" class="HomeImg" alt="Imagen del Home">
 </div>
-
-
-    {{#if hasPrevPage}}
-    <div class="btnsContainer"></div>
-    <a href="/products/?page={{prevPage}}"><button> < Anterior</button> </a>
-    {{/if}}
-
-    <div class="numberPage">
-   {{page}}
-    </div>
-  
-
-    {{#if hasNextPage}}
-    <a href="/products/?page={{nextPage}}"><button>Próxima > </button> </a>
-    </div>
-    {{/if}}
-
-
-
- <script src="../public/js/home.js" ></script> 
-<script src="/socket.io/socket.io.js"></script>
+<script src="../public/js/home.js"></script>

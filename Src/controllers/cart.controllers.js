@@ -2,8 +2,8 @@ import { cartsService } from "../services/services.js"
 
 const getUserCart=async(req,res)=>{
     try{
-    const cart= req.user.cart[0]
-    res.send({status:"success", payload:cart })
+    const cart = await cartsService.getCarts();
+    return res.sendSuccessWithPayload(cart)
     }
     catch(error){
     console.log('Error getUserCart:', error)

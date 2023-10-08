@@ -11,18 +11,18 @@ export default class RouterPadre{
     }
     init(){}
     get(path,policies, ...callbacks){
-        this.router.get(path,passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.get(path,this.generateCustomResponse,passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
     }
     post(path,policies, ...callbacks){
-        this.router.post(path,passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.post(path,this.generateCustomResponse,passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
     }
 
     put(path, policies,...callbacks){
-        this.router.put(path, passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.put(path,this.generateCustomResponse,passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
     }
 
     delete(path, policies,...callbacks){
-        this.router.delete(path, passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.delete(path,this.generateCustomResponse,passportCall('jwt',{strategyType:'jwt'}),this.handlePolicies(policies),this.applyCallbacks(callbacks))
     }
 
     generateCustomResponse =(req,res,next)=>{
@@ -45,6 +45,7 @@ export default class RouterPadre{
         return (req,res,next) => {
             if(policies[0]==="PUBLIC") return next();
             const user = req.user;
+            console.log(user)
             if(policies[0]==="NO_AUTH" && user) return res.status(401).send({status:"error",error:"Unauthorized"});
             if(policies[0]==="NO_AUTH" && !user) return next();
             if(!user) return res.status(401).send({status:"error",error:req.error});

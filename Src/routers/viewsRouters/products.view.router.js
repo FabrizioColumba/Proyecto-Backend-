@@ -5,7 +5,7 @@ import {productsService,userServices} from '../../services/services.js'
 
 export default class ProductsView extends RouterPadre{
     init(){
-        this.get('/', ["PUBLIC"], async (req,res)=>{
+        this.get('/', ["PUBLIC","PREMIUM","ADMIN"], async (req,res)=>{
             const { page=1, category, limit: queryLimit}= req.query
     
             const defaultLimit = 6
@@ -28,7 +28,6 @@ export default class ProductsView extends RouterPadre{
                     isPremium:isPremium,
                     isUser:isUser,
                     css:'products'
-                    //cid:cid
                 })
             }else{
 
@@ -80,20 +79,6 @@ export default class ProductsView extends RouterPadre{
             })
         })
 
-        this.get('/premiumProducts', ["PREMIUM"], async (req,res)=>{
-            const email= req.user.email
-            const userDb= await userServices.getUser('email',email)
-            const alias = userDb.alias
-            const products= await productsService.getProductsByOwnerEmail(email)
-            const productsJSON = JSON.parse(JSON.stringify(products));
-           
-            res.render('premiumProducts',{
-                css:'prmiumProducts',
-                products:productsJSON,
-                alias:alias
-
-            })
-        })
 
         this.get('/useproducts/:userAlias',["ADMIN", "USER","PREMIUM"], async (req,res)=>{
             const {userAlias}=req.params

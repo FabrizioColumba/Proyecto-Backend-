@@ -1,50 +1,28 @@
 <nav class="navContainer">
     <ul class="nav-ul">
-        {{#if isUserOrPremium}}
                 <li><a href="/home" class="nav-item">HOME</a></li>
-        {{/if}}
-         <li><a href="/products/?category=placas" class="nav-item">Placas de video</a></li>
-         <li><a href="/products/?category=procesadores" class="nav-item">Procesadores</a></li>
-         <li><a href="/products/?category=ram" class="nav-item" >Rams</a></li>
-          
-          {{#if  isUserOrPremium}}
-              <li><a href="/cart" class="nav-item" >
-            <span class="material-symbols-outlined">
-            shopping_cart
-            </span>       
-           </a></li>
-          {{/if}}
+                <li><a href="/cart" class="nav-item" >
+                <span class="material-symbols-outlined">
+                shopping_cart
+                </span>       
+                </a></li>
     </ul>
 </nav>
-
 
 <div class="bodyContainer">
 <div class="productsContainer">
     {{#each products}}
   <div class="productCard">
         <img src={{this.img}} alt={{this.description}}>
-        <p>Description: {{this.description}} </p>
-        <p>Color:{{this.color}} </p>
-        <p>Talle: {{this.talle}}</p>
-        <p>Duaeño:{{this.owner}} </p>
-        <p>Price: $ {{this.price}} </p>
-
+        <p>Description: {{this.description}}</p>
+        <p>Duaeño:{{this.owner}}</p>
+        <p>Price: $ {{this.price}}</p>
         {{#if ../isUserOrPremium}}
         <button id="btn-subtract-product" class="btn-subtract-product">-</button>
         <span id="spam-quantity" class="spam-quantity">1</span>
         <button id="btn-add-more-product" class="btn-add-more-product"  data-stock="{{this.stock}}">+</button>
         <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
         {{/if}}
-
-        {{#if ../isAdmin}}
-         <a href="/products/updateProduct/{{this._id}}" class="btnUpdateAndDelete">
-        <span class="material-symbols-outlined">
-        edit
-        </span>
-        Modificar datos
-        </a>
-
-
         <button class="btnDeleteProduct btnUpdateAndDelete"  data-product-id="{{this._id}}" >
          <span class="material-symbols-outlined">
         delete_sweep
@@ -54,10 +32,6 @@
     </div>
     {{/each}}
 </div>
-
-
-
-
     {{#if hasPrevPage}}
     <div class="btnsContainer"></div>
     <a href="/products/?page={{prevPage}}"><button> < Anterior</button> </a>
@@ -92,13 +66,6 @@
         <button class="btnCard"  data-product-id="{{this._id}}" >Add to cart</button>
         {{/if}}
        
-        {{#if ../isAdmin}}
-       <a href="/products/updateProduct/{{this._id}}" class="btnUpdateAndDelete">
-        <span class="material-symbols-outlined">
-        edit
-        </span>
-        Modificar datos
-        </a>
 
         <button class="btnDeleteProduc btnUpdateAndDelete"  data-product-id="{{this._id}}" >
         <span class="material-symbols-outlined">
@@ -114,4 +81,3 @@
 </div>
 
  <script src="/js/products.js"></script> 
- <script src="/js/adminhome.js"></script>

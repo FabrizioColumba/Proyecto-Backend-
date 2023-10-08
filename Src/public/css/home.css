@@ -125,15 +125,6 @@ html, body {
     margin-bottom: 6px;
     font-size: 0.75rem;
   }
-  .tags > .availability.almost-gone {
-    background-color: #ff9600;
-  }
-  .tags > .availability.discount {
-    background-color: #0074d9;
-  }
-  .tags > .availability.sold-out {
-    background-color: #f00;
-  }
    nav {
        z-index: 999;
        width: 100%;
@@ -143,16 +134,12 @@ html, body {
   }
    nav .mini {
        position: fixed;
-       top: 80px;
        right: 10px;
-       background: #fff;
-       padding: 40px;
        opacity: 0;
        visibility: hidden;
        transition: opacity 0.2s ease 0.2s;
   }
    nav .mini.visible {
-       padding: 40px;
        opacity: 1;
        visibility: visible;
   }

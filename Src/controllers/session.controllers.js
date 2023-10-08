@@ -26,41 +26,23 @@ const loginUser=async (req,res)=>{
         res.send({status:'error', error: req.error})
       }
       else{
-        const role= req.user.role
-        const uid= req.user.id
+        const role = req.user.role
+        const uid = req.user.id
           const accessToken = generateToken(req.user);
           const connectionDate = new Date()
           const expirationDate = new Date(connectionDate)
-          expirationDate.setDate(connectionDate.getDate() +30 )
-        
+          expirationDate.setDate(connectionDate.getDate() +30)
           const user = await userServices.updateUserLastConection(uid,connectionDate)
           const exp = await userServices.updateUserExpiration(uid,expirationDate)
-  
-          res.cookie('authToken',accessToken, {
+          return res.cookie('authToken',accessToken, {
               maxAge:1000*60*60*24,
               httpOnly:true,
-              sameSite:"none"
           }).send({status:'success', userrole:role})
-      }
-      }
+      }}
     catch(error){
        console.log('Error catch login:', error)
     }
 }
-
-  const loginWidthGitHub = (req,res)=>{
-    try{
-        const accessToken = generateToken(req.user);
-        res.cookie('authToken',accessToken, {
-        maxAge:1000*60*60*24,
-        sameSite:"none"
-        })
-        res.redirect('/home')
-    }
-    catch(error){
-       console.log('Error catch loginWithGitHub:', error)
-    }
-  }          
 
 const restoreRequest = async(req,res)=>{
   const {email} = req.body
@@ -107,7 +89,6 @@ const cerrarsession=async(req,res)=>{
 export default{
     registerUser,
     loginUser,
-    loginWidthGitHub,
     restoreRequest,
     newPswRestore,
     cerrarsession
